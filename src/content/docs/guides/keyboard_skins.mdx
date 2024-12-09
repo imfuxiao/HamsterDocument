@@ -31,14 +31,16 @@ import image9 from './images/skins/image9.png';
 
 
 :::note[注意]
-YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能的影响，「仓」内置的「键盘皮肤」功能中，在点击选中皮肤后，会将配置文件中的锚点语法转为普通的文本值（此时文件中的注释信息会丢失）。如果您不使用「仓」的界面配置，需要手工转换锚点, 并提供转换后的文件，注意转换后的文件为 `.文件名.keyboard`。
+YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能的影响，「仓」内置的「键盘皮肤」功能中，在点击选中皮肤后，会将配置文件中的锚点语法转为普通的文本值（此时文件中的注释信息会丢失）。如果您不使用「仓」的界面配置，需要手工转换锚点, 并提供转换后的文件。
+
+注意：转换后的文件为 `.文件名.keyboard`。
 :::
 
 ## 功能说明
 
 「键盘皮肤」是「仓输入法」（以下简称「仓」）全新的自定义键盘功能，您可以使用此功能定制个性化的键盘。
 
-「键盘皮肤」与已有功能[「自定义键盘」](https://ihsiao.com/apps/hamster/docs/CustomKeyboard.html)都可以完成对键盘的自定义，但「键盘皮肤」的功能更为强大，比如，支持跨行的布局，支持图片作为背景等等。
+「键盘皮肤」与已有功能[「自定义键盘」](/apps/hamster/docs/guides/custom_keyboard)都可以完成对键盘的自定义，但「键盘皮肤」的功能更为强大，比如，支持跨行的布局，支持图片作为背景等等。
 
 ## 皮肤文件
 
@@ -68,6 +70,10 @@ YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能
 - light：`必须`，用于提供浅色模式下键盘配置文件及图片资源文件。
     - resources：`必须`，用于存放图片及其图片描述文件。
 
+:::tip[hskin 文件]
+可以通过 iOS 中的分享功能将此文件分享给「仓」App，或者在「文件」App 中选择「仓」App打开此文件。
+:::
+
 ## 皮肤配置文件
 
 通过 `config.yaml` 文件描述在不同状态下应该使用的键盘配置。
@@ -76,17 +82,17 @@ YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| name | 字符串，必须 | 皮肤名称 |
-| author | 字符串，必须 | 作者 |
-| fontFace | 对象，非必须 | 皮肤应用的字体，具体请查阅字体设置 |
-| pinyin | 对象，必须 | 中文键盘样式，具体请查阅键盘设置 |
-| alphabetic | 对象，必须 | 英文键盘样式，具体请查阅键盘设置 |
-| numeric | 对象，必须 | 数字键盘样式，具体请查阅键盘设置 |
-| symbolic | 对象，必须 | 符号键盘配置，具体请查阅键盘设置 |
+| name | 字符串 | 必须，皮肤名称 |
+| author | 字符串 | 必须，作者 |
+| fontFace | 对象 | 非必须，皮肤应用的字体，参见[字体设置](#字体设置) |
+| pinyin | 对象 | 必须，中文键盘样式，参见[键盘设置](#键盘设置) |
+| alphabetic | 对象 | 必须，英文键盘样式，参见[键盘设置](#键盘设置) |
+| numeric | 对象 | 必须，数字键盘样式，参见[键盘设置](#键盘设置) |
+| symbolic | 对象 | 必须，符号键盘配置，参见[键盘设置](#键盘设置) |
 
 ### 字体设置
 
-在 `config.yaml` 文件中通过 `fontFace` 属性声明字体。具体[查阅 fontFace 参数说明](https://www.notion.so/1320147ebd8a80da8f17f4d02e2894c1?pvs=21)。
+在 `config.yaml` 文件中通过 `fontFace` 属性声明字体。参见[fontFace](#fontface)。
 
 重要：字重属性 fontWeight 会影响字体的设置。
 
@@ -117,8 +123,8 @@ YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| iPhone | 对象 | 表示当前设备为 iPhone 时采用的键盘配置，具体请查阅 iPhone 参数 |
-| iPad | 对象 | 表示当前设备为 iPad 时采用的键盘配置。具体请查阅 iPad 参数 |
+| iPhone | 对象 | 表示当前设备为 iPhone 时采用的键盘配置，参见[iPhone](#iphone) |
+| iPad | 对象 | 表示当前设备为 iPad 时采用的键盘配置。参见[iPad](#ipad) |
 
 配置示例:
 
@@ -204,7 +210,7 @@ preeditHeight: 30
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| `insets` | 对象 | 指文字距离预编辑区四周的距离，用于微调预编辑区显示文字的位置，具体内容可查阅 insets 属性 |
+| `insets` | 对象 | 指文字距离预编辑区四周的距离，用于微调预编辑区显示文字的位置，具体内容参见[insets](#insets) |
 | `backgroundStyle` | 字符串，样式引用 | 设置预编辑区背景样式 |
 | `foregroundStyle` | 字符串，样式引用 | 设置预编辑区前景样式 |
 | `textColor` | 字符串 | 预编辑区文字颜色 |
@@ -213,15 +219,15 @@ preeditHeight: 30
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 可用来设计预编辑区的背景图片。具体查阅 normalImage 属性 |
+| normalImage | 对象 | 可用来设计预编辑区的背景图片。参见[normalImage](#normalimage) |
 
 - `foregroundStyle` 前景样式，它包含以下属性
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
 | `textColor` | 字符串 | 预编辑区文字颜色 |
-| `fontSize` | 浮点 | 预编辑区文字大小，具体查阅 fontSize 属性 |
-| `fontWeight` | 枚举 | 预编辑区字重，具体查阅 fontWeight 文档属性 |
+| `fontSize` | 浮点 | 预编辑区文字大小，参见[fontSize](#fontsize) |
+| `fontWeight` | 枚举 | 预编辑区字重，参见[fontWeight](#fontweight) |
 
 配置示例：
 
@@ -277,7 +283,7 @@ toolbarHeight: 35
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 背景样式图片，具体请查阅 normalImage 属性 |
+| normalImage | 对象 | 背景样式图片，参见[normalImage](#normalimage) |
 
 - primaryButtonStyle 工具栏主按键样式，即左侧首个按键。它包含以下属性：
 
@@ -285,7 +291,7 @@ toolbarHeight: 35
 | --- | --- | --- |
 | backgroundStyle | 字符串，样式引用 | 按键的背景样式 |
 | foregroundStyle | 字符串，样式引用 | 按键的前景样式 |
-| action | 字符串或对象 | 按键的动作，具体请查阅行为 Action |
+| action | 字符串或对象 | 按键的动作，参见[行为](#行为) |
 
 - backgroundStyle 样式中包含下面属性
 
@@ -300,22 +306,22 @@ toolbarHeight: 35
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 一般状态下，按键的前景图片，具体请查阅 normalImage 属性 |
-| highlightImage | 对象 | 按下状态时，按键的前景图片，具体请查阅 highlightImage 属性 |
+| normalImage | 对象 | 一般状态下，按键的前景图片，参见[normalImage](#normalimage) |
+| highlightImage | 对象 | 按下状态时，按键的前景图片，参见[highlightImage](#highlightimage) |
 
 当使用文字时，可以使用下面属性：
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| text | 字符串 | 定义按键显示的文字，可使用 JavaScript 动态显示当前文字。具体请查阅 JavaScript 扩展 |
-| normalColor | 字符串 | 一般状态下文字颜色，可参考颜色格式 |
-| highlightColor | 字符串 | 按下状态时，文字颜色，可参考颜色格式 |
-| fontSize | 浮点 | 字体大小，可查阅 fontSize 属性 |
-| fontWeight | 枚举 | 字重，可查阅 fontWeight 属性 |
+| text | 字符串 | 定义按键显示的文字，可使用 JavaScript 动态显示当前文字。参见[脚本](#脚本) |
+| normalColor | 字符串 | 一般状态下文字颜色，参见[颜色格式](#颜色格式) |
+| highlightColor | 字符串 | 按下状态时，文字颜色，参见[颜色格式](#颜色格式) |
+| fontSize | 浮点 | 字体大小，参见[fontSize](#fontsize) |
+| fontWeight | 枚举 | 字重，参见[fontWeight](#fontweight) |
 
 #### secondaryButtonStyle
 
-除主键外的其他按键的样式。数组类型，最多添加 7 个样式引用。每个样式的设置与 primaryButtonStyle 设置方式相同，具体请查阅 primaryButtonStyle 样式。
+除主键外的其他按键的样式。数组类型，最多添加 7 个样式引用。每个样式的设置与 primaryButtonStyle 设置方式相同，参见 primaryButtonStyle 样式。
 
 #### horizontalCandidateStyle
 
@@ -358,8 +364,8 @@ toolbarHeight: 35
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 一般状态下，按键的前景图片。具体请查阅 normalImage 参数。 |
-| highlightImage | 大中型 | 按下状态时，按键的前景图片。具体请查阅 highlightImage 参数。 |
+| normalImage | 对象 | 一般状态下，按键的前景图片。参见[normalImage](#normalimage) |
+| highlightImage | 大中型 | 按下状态时，按键的前景图片。参见[highlightImage](#highlightimage) |
 
 #### verticalCandidateStyle
 
@@ -371,7 +377,7 @@ toolbarHeight: 35
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| insets | 对象类型 | 用于调整垂直划动面板的内距。具体请查阅 insets 参数。 |
+| insets | 对象类型 | 用于调整垂直划动面板的内距。参见[insets](#insets) |
 | bottomRowHeight | 浮点 | 底部最后一行的高度 |
 | backgroundStyle | 字符串，样式引用 | 背景样式设置 |
 | candidateStyle | 字符串，样式引用 | 候选字样式设置 |
@@ -384,13 +390,13 @@ toolbarHeight: 35
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 背景图片设置，具体请查阅 normalImage 属性。 |
+| normalImage | 对象 | 背景图片设置，参见[normalImage](#normalimage) |
 
 - candidateStyle 候选字样式设置，它包含以下属性
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| insets | 对象类型 | 候选字区域内距调整，具体请查阅 insets 参数。 |
+| insets | 对象类型 | 候选字区域内距调整，参见[insets](#insets) |
 | backgroundColor | 字符串 | 候选字区域背景色 |
 | separatorColor | 字符串 | 分隔线颜色 |
 | highlightBackgroundColor | 字符串 | 选中状态下，候选字背景颜色。 |
@@ -428,7 +434,7 @@ toolbarHeight: 35
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
 | name | 字符串 | 操作名称 |
-| action | 字符串或对象 | 行为，具体请查阅行为 Action |
+| action | 字符串或对象 | 行为，参见[行为](#行为) |
 
 ## 按键区
 
@@ -710,7 +716,7 @@ row2Style:
 > 技巧：根据约束1及约束2，相同级别的 HStack 宽度相同，所以可以省略 HStack 的 width 宽度的描述；而相同级别的 VStack 高度相同，所以省略 VStack 的 height 高度描述。
 >
 
-上例中 `row1Style` 是 HStack 自定义样式的值，它包含一个 `size` 属性，通过 size 可以设置分割区域的宽度或高度。具体请查阅 size 属性。
+上例中 `row1Style` 是 HStack 自定义样式的值，它包含一个 `size` 属性，通过 size 可以设置分割区域的宽度或高度。参见[size](#size)。
 
 ### Cell 的外观及行为
 
@@ -740,7 +746,7 @@ aButton:
 > 技巧：根据约束1及约束2，同一行的 Cell 高度相同，同一列中的 Cell 宽度相同，所以相同行中的 Cell 可以省略 `height`，相同列中的 cell 可以省略 `width`。
 >
 
-具体 size 如何填写，可以查阅 size 属性。
+具体 size 如何填写，参见[size](#size)。
 
 #### Cell 显示尺寸
 
@@ -770,7 +776,7 @@ aButton:
     alignment: right
 ```
 
-`bounds` 与 `size` 基本相同，都是调整大小的，只是 `bounds` 多了一个 `alignment` 属性，指示当显示宽度或高度与物理尺寸大小不一致时，需要向那个方向对齐。如上图所示中的 a 键需要向右对齐，而 l 键需要向左对齐。具体参数请查阅 bounds 属性。
+`bounds` 与 `size` 基本相同，都是调整大小的，只是 `bounds` 多了一个 `alignment` 属性，指示当显示宽度或高度与物理尺寸大小不一致时，需要向那个方向对齐。如上图所示中的 a 键需要向右对齐，而 l 键需要向左对齐。参见[bounds](#bounds)。
 
 #### Cell 的背景样式
 
@@ -796,8 +802,8 @@ alphabeticBackgroundStyle:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 必须，普通状态下的背景图片。具体参数请查阅 normalImage。 |
-| highlightImage | 对象 | 可选，当按键按下时的背景图片，具体参数请查阅 highlightImage。 |
+| normalImage | 对象 | 必须，普通状态下的背景图片。参见[normalImage](#normalimage) |
+| highlightImage | 对象 | 可选，当按键按下时的背景图片，参见[highlightImage](#highlightimage) |
 | animation | 字符串，样式引用 | 可选，可以为背景设置动画 |
 
 示例
@@ -818,8 +824,8 @@ alphabeticBackgroundStyle:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| type | 枚举 | 必须，目前固定值为 `original`，样式类型，用来表示当前背景使用原生属性设置。 |
-| insets | 对象 | 非必须，用来设置背景的内距，当内距为0时，背景尺寸等于Cell的显示尺寸，此时Cell之间没有间距。 |
+| type | 枚举 | 必须，样式类型。<br />目前固定值为 `original`，用来表示当前背景使用原生属性设置。 |
+| insets | 对象 | 非必须，用来设置背景的内距。<br />当内距为0时，背景尺寸等于 Cell 的显示尺寸，此时Cell之间没有间距。 |
 | normalColor | 字符串 | 必须，普通状态下的背景颜色 |
 | highlightColor | 字符串 | 必须，当按键按下时的背景颜色 |
 | cornerRadius | 浮点 | 非必须，背景圆角 |
@@ -831,7 +837,7 @@ alphabeticBackgroundStyle:
 | normalShadowColor | 字符串 | 非必须，正常状态下阴影颜色，为空时不显示阴影。 |
 | highlightLowerEdgeColor | 字符串 | 非必须，当按键按下时，阴影的颜色，为空时不显示。 |
 | shadowRadius | 浮点 | 非必须，阴影的模糊半径，数值越大，阴影越模糊。 |
-| shadowOffset | 对象 | 非必须，阴影偏移量，具体请查阅 offset 。 |
+| shadowOffset | 对象 | 非必须，阴影偏移量，参见[offset](#offset) |
 | animation | 对象 | 非必须，可以为背景设置一个动画。 |
 
 > 注意: 阴影的添加会消耗 CPU 资源，非必要不要添加，最好的做法是通过图片来设置。
@@ -912,7 +918,7 @@ lockButton:
     }
 ```
 
-脚本函数具体内容，可查阅[脚本](#脚本)内容。
+脚本函数具体内容，参见[脚本](#脚本)设置。
 
 前景样式同背景样式，也分两种情况。
 
@@ -920,8 +926,8 @@ lockButton:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 必须，普通状态下的背景图片。具体参数请查阅 normalImage。 |
-| highlightImage | 对象 | 可选，当按键按下时的背景图片，具体参数请查阅 highlightImage。 |
+| normalImage | 对象 | 必须，普通状态下的背景图片。<br />参见[normalImage](#normalimage) |
+| highlightImage | 对象 | 可选，当按键按下时的背景图片，<br />参见[highlightImage](#highlightimage) |
 
 - 使用文字定义前景，可使用以下属性描述:
 
@@ -931,8 +937,8 @@ lockButton:
 | normalColor | 字符串 | 必须，一般状态下字符颜色。 |
 | highlightColor | 字符串 | 非必须，按键按下时字符颜色。 |
 | fontSize | 浮点 | 非必须，字体大小。 |
-| fontWeight | 枚举 | 非必须，字重。注意: 字重的设置会影响当前设置的字体。 |
-| center | 对象 | 必须。调整字体显示位置。具体请查阅 center 属性。 |
+| fontWeight | 枚举 | 非必须，字重。<br />注意: 字重的设置会影响当前设置的字体。 |
+| center | 对象 | 必须。调整字体显示位置。<br />参见[center](#center) |
 
 注意: 默认显示的文字是水平居中，垂直居上。如需居中显示，只需要调节 center.y 的值。
 
@@ -942,7 +948,7 @@ lockButton:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| insets | 对象 | 调整按键气泡的内距。 <br/> 当值为空，或值全部为零时，使用默认值： `insets: { top: 6, bottom: 6, left: 8, right: 8 }` |
+| insets | 对象 | 调整按键气泡的内距。 <br/> 当值为空，或值全部为零时，使用默认值。<br />默认值: `insets: { top: 6, bottom: 6, left: 8, right: 8 }` |
 | backgroundStyle | 字符串，样式引用 | 气泡背景样式。 |
 | foregroundStyle | 字符串，样式引用 | 气泡前景样式。 |
 | swipeUpForegroundStyle | 字符串，样式引用 | 上划状态下，气泡前景样式。 |
@@ -993,7 +999,7 @@ lockButton:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| action | 字符串或对象 | 点击后的行为。具体请查阅行为 Action。 |
+| action | 字符串或对象 | 点击后的行为。参见[行为](#行为) |
 | uppercasedStateAction | 字符串或对象 | 当键盘为大写状态或大写锁定状态时，点击后的行为。可以为空，为空时，使用 action 设置的值。 |
 | preeditStateAction | 字符串或对象 | 当键盘处于预编辑状态（有未上屏的输入选项）时，点击后的行为。为空时，使用 action 设置的值。 |
 | repeatAction | 字符串或对象 | 长按后，重复执行的行为。**为空值时，无任何操作**。 |
@@ -1193,13 +1199,13 @@ toolbarButton2ForegroundStyle:
 
 内置函数：
 
-| 函数名 | 说明 | 入参 | 返回值 |
+| 函数名 | 入参 | 返回值 | 说明 |
 | --- | --- | --- | --- |
-| `$getRimeOptionState` | 获取 rime 引擎 option 的状态，如 `ascii_state` | rime 中 option 的值，如：`ascii_state` | 布尔值 |
-| `$getRimePreedit` | 获取 rime 引擎中 preedit 字符串。 | 无 | 字符串 |
-| `$getRimeCandidates` | 获取 rime 引擎中的候选字。 | 无 | 数组类型，其中每个元素都为一个 [Candidate 对象](#candidate-对象) |
-| `$getSymbolicKeyboardLockState` | 获取符号键盘锁定状态 | 无 | 布尔值 |
-| `$getReturnKeyType` | 当前回车键建议显示文字。 | 无 | 整数，表示系统推荐回车键显示文字。 |
+| `$getRimeOptionState` |  字符串 | 布尔值 | 获取 rime 引擎 option 的状态。<br />如 `ascii_state` |
+| `$getRimePreedit` | 无 | 字符串 | 获取 rime 引擎中 preedit 字符串 |
+| `$getRimeCandidates` | 无 | 数组类型 <br/> 其中每个元素都为一个 [Candidate 对象](#candidate-对象) | 获取 rime 引擎中的候选字 |
+| `$getSymbolicKeyboardLockState` | 无 | 布尔值 | 获取符号键盘锁定状态 |
+| `$getReturnKeyType` |  无 | 整数，表示系统推荐回车键显示文字。 | 当前[回车键建议显示文字](#系统推荐回车键显示文字) |
 
 ```yaml
   text: |-
@@ -1289,8 +1295,8 @@ IMG2:
 
 上面内容中分别描述了名为 `IMG1` 与 `IMG2` 两张小图片，图片属性如下：
 
-- `rect` 表示图片的位置及大小信息，具体查阅 `rect` 属性。
-- `insets` 表示**图片中不可被拉伸**的区域，它使用 top，bottom，left，right 四个方向描述，分别表示图片在这四个方向中，有多少区域是不可以被拉伸。具体查阅 insets 属性。如示例中的 `IMG1`，它的顶部（top），有 50 个像素是不可以被拉伸的。
+- `rect` 表示图片的位置及大小信息，参见[rect](#rect)。
+- `insets` 表示**图片中不可被拉伸**的区域，它使用 top，bottom，left，right 四个方向描述，分别表示图片在这四个方向中，有多少区域是不可以被拉伸。参见[insets](#insets)。如示例中的 `IMG1`，它的顶部（top），有 50 个像素是不可以被拉伸的。
 
 ### 图片显示的过程
 
@@ -1353,12 +1359,11 @@ IMG2:
 
 <Image src={image6} alt="" />
 
-已 iPhoneX 屏幕尺寸为例，
+以 iPhoneX 屏幕尺寸为例，
 
 | 物理宽度 | 物理高度 | 像素宽度 | 像素高度 | PPI | Scale |
 | --- | --- | --- | --- | --- | --- |
 | 375 | 812 | 1125 | 2436 | 458 | 3 |
-|  |  |  |  |  |  |
 
 字母按键可视区域宽度（单位：pixel）: 1125 / 10 = 112.5（包含左右留白），左右留白共: 18
 
@@ -1524,13 +1529,18 @@ IMG2:
 | 属性 | 类型 | 说明 | 示例 |
 | --- | --- | --- | --- |
 | character | ASCII 单个字符 | 发送给 RIME 的单个字符 | `{ character: w }` |
-| symbol | 字符串 | 直接上屏的字符，不会与 RIME 交互 | `{ symbol: w }`
-`{ symbol: W }`
-`{ symbol: abc }`  |
-| shortcutCommand | 枚举 | 说明，键盘快捷指令，具体[查阅快捷指令](#快捷指令-shortcutcommand)。 | `{ shortcutCommand: "#重输" }` |
-| sendKeys | 字符串 | 发送给 RIME 引擎的多个字符，具体[查阅 SendKey](#sendkeys)。 | `{ sendKeys: "Control+l" }` |
+| symbol | 字符串 | 直接上屏的字符，不会与 RIME 交互 | `{ symbol: w }` <br /> `{ symbol: W }` <br /> `{ symbol: abc }` |
+| shortcutCommand | 枚举 | 说明，键盘快捷指令，参见[快捷指令](#快捷指令-shortcutcommand)。 | `{ shortcutCommand: "#重输" }` |
+| sendKeys | 字符串 | 发送给 RIME 引擎的多个字符，参见[SendKey](#sendkeys)。 | `{ sendKeys: "Control+l" }` |
 | openURL | 字符串 | 用于打开某个链接 | `{ openURL: "weixin://" }` |
-| keyboardType | 枚举 | 用于切换键盘，具体[查阅键盘类型](#键盘类型)。 | `{ keyboardType: alphabetic }` |
+| keyboardType | 枚举 | 用于切换键盘，参见[键盘类型](#键盘类型)。 | `{ keyboardType: alphabetic }` |
+| floatKeyboardType | 枚举 | 在当前键盘上层浮动显示一个键盘。<br /> 键盘类型可自定义，参见[键盘类型](#键盘类型)。 | `{ floatKeyboardType: alphabetic }` |
+
+:::note[浮动键盘]
+浮动键盘最大宽度、高度为当前键盘区域的 85%。当需要缩小浮动键盘的区域时，可使用 `insets` 属性设置。
+
+`insets` 属性可用于 `keyboardType` 的样式中，也可用于 `keyboardType` 中的 `backgroundStyle` 中。
+:::
 
 ### 快捷指令 ShortcutCommand
 
@@ -1538,22 +1548,17 @@ IMG2:
 
 | 值 | 说明 |
 | --- | --- |
-| `#简繁切换` 或 `#繁简切换` | 用于切换 RIME 引擎中的简体繁体，
-注意：需要为系统配置当前输入方案简繁切换的 option 的值。
-可查阅 hamster.yaml 中的 rime 下的 switchSimplifiedOrTraditionalOption 选项 |
+| `#简繁切换` 或 `#繁简切换` | 用于切换 RIME 引擎中的简体繁体。<br /> 注意：需要为系统配置当前输入方案简繁切换的 option 的值。 <br />参见 hamster.yaml 中的 rime 下的 switchSimplifiedOrTraditionalOption 选项 |
 | `#中英切换` | 用于切换 RIME 引擎中的 `ascii_mode` 状态，具体效果取决于当前输入方案的 ascii 的设置。 |
-| `#行首` | 将光标移动到开始位置。
-注意：由于 iOS 系统限制，此功能可能并不会移动到文档的开始位置。实际使用中，可能会移动到某个换行位置处。 |
-| `#行尾` | 将光标移动到结束位置。
-注意：可能会遇到 `#行首` 指令同样的问题，原因一致。 |
+| `#行首` | 将光标移动到开始位置。 <br />注意：由于 iOS 系统限制，此功能可能并不会移动到文档的开始位置。实际使用中，可能会移动到某个换行位置处。 |
+| `#行尾` | 将光标移动到结束位置。 <br />注意：可能会遇到 `#行首` 指令同样的问题，原因一致。 |
 | `#次选上屏` | 当存在多个候选字时，执行此指令会上屏序号为2的候选字。 |
 | `#三选上屏` | 当存在多个候选字时，执行此指令会上屏序号为3的候选字。 |
 | `#方案切换` | 打开方案切换页面 |
 | `#换行` | 光标处输入 `\r\n` |
 | `#Enter` | 光标处输入 `\n` |
 | `#重输` | 清空当前未上屏的预输入编码及候选字 |
-| `#上个输入方案` | 切换当前输入方案为上个输入方案，若上个输入方案为空，则切换为排序为第二位的输入方案。
-如果当前输入方案列表只有一个，则没有任何效果。 |
+| `#上个输入方案` | 切换当前输入方案为上个输入方案，若上个输入方案为空，则切换为排序为第二位的输入方案。<br />如果当前输入方案列表只有一个，则没有任何效果。 |
 | ~~#左手模式（不可用）~~ | 单手模式下的左手模式 |
 | ~~#右手模式（不可用）~~ | 单手模式下的右手模式 |
 | `#RimeSwitcher` | 执行 RIME 引擎的 switcher 模式 |
@@ -1620,7 +1625,7 @@ IMG2:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| insets | 对象 | 调整预编辑区文本位置，具体查阅 insets 属性 |
+| insets | 对象 | 调整预编辑区文本位置，参见[insets](#insets) |
 | backgroundStyle | 字符串，样式引用 |  |
 | foregroundStyle | 字符串，样式引用 |  |
 
@@ -1644,7 +1649,7 @@ IMG2:
 
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
-| normalImage | 对象 | 具体查阅 normalImage 属性 |
+| normalImage | 对象 | 参见[normalImage](#normalimage) |
 
 工具栏 `primaryButtonStyle` 属性样式包含以下属性
 
@@ -1652,7 +1657,7 @@ IMG2:
 | --- | --- | --- |
 | `backgroundStyle` | 字符串，样式引用 | 工具栏主按键背景样式 |
 | `foregroundStyle` | 字符串，样式引用 | 工具栏主按键前景样式 |
-| `action` | 多种类型 | 工具栏主按键行为，具体查阅行为 |
+| `action` | 多种类型 | 工具栏主按键行为，参见[行为](#行为) |
 
 ### size
 
@@ -1735,14 +1740,14 @@ alignment 用来描述显示尺寸与物理尺寸不一致时，对齐的方向�
 | 属性 | 类型 | 说明 |
 | --- | --- | --- |
 | file | 字符串 | 图片文件名称，因图片必须使用 png 格式，所以当前无须包含文件后缀。 |
-| image | 字符串 | 图片描述文件中的键，具体请查阅[图片描述文件](#图片描述文件)。 |
+| image | 字符串 | 图片描述文件中的键，参见[图片描述文件](#图片描述文件)。 |
 | targetScale | 浮点类型或对象类型，可选值。 | 对图片「显示尺寸」进行放大或缩小。参见 targetScale 属性 |
 
 :::tip[技巧]
 技巧：背景样式中的图片无须设置此参数，因为背景样式中的图片会跟随 Cell 的显示尺寸大小拉伸。前景中的样式需要根据显示的效果，添加此参数控制显示尺寸。
 :::
 
-> 关于图片裁剪和显示的逻辑，请[查阅图片的显示与裁剪](#图片裁剪与显示)。
+> 关于图片裁剪和显示的逻辑，参见[图片裁剪与显示](#图片裁剪与显示)。
 
 - 情况2，使用系统内置图片（SF Symbol），此时通过下面的属性设置
 
@@ -1873,7 +1878,7 @@ assetImageName 目前可以引用以下图片：
 | url | 字符串 | fonts 目录下的字体文件名称，包含文件后缀。 |
 | name | 字符串 | 系统内置字体名称。
 当 name 与 url 同时存在，则 name 优先。 |
-| ranges | 数组类型，非必须 | 字体 Unicode 生效范围，可以为一个字体设置多个范围，具体查阅 ranges 参数。 |
+| ranges | 数组类型，非必须 | 字体 Unicode 生效范围，可以为一个字体设置多个范围，参见[ranges](#ranges)。 |
 
 ### ranges
 

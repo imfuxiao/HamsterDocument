@@ -8,19 +8,21 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "「仓输入法」使用指南",
+      editLink: {
+        baseUrl: "https://github.com/imfuxiao/HamsterDocument/tree/main",
+      },
       logo: {
         src: "./src/assets/hamster.png",
       },
-      editLink: {
-        base: "https://github.com/imfuxiao/HamsterDocument/tree/main",
-      },
       social: {
-        github: "https://github.com/imfuxiao/HamsterDcouments",
+        github: "https://github.com/imfuxiao/HamsterDocument",
       },
       customCss: [
         // 用于普通和半粗字重的 Fontsource 文件。
         "@fontsource/ibm-plex-serif/400.css",
         "@fontsource/ibm-plex-serif/600.css",
+        "@fontsource/noto-sans-sc/400.css",
+        "@fontsource/noto-sans-sc/600.css",
         "./src/styles/custom.css",
       ],
       sidebar: [
