@@ -7,6 +7,9 @@ tableOfContents:
 import { Image } from 'astro:assets';
 import image from './images/skins/image.png';
 import image1 from './images/skins/image1.png';
+import image10 from './images/skins/image10.png';
+import image11 from './images/skins/image11.png';
+import image12 from './images/skins/image12.png';
 import image2 from './images/skins/image2.png';
 import image3 from './images/skins/image3.png';
 import image4 from './images/skins/image4.png';
@@ -15,9 +18,6 @@ import image6 from './images/skins/image6.png';
 import image7 from './images/skins/image7.png';
 import image8 from './images/skins/image8.png';
 import image9 from './images/skins/image9.png';
-import image10 from './images/skins/image10.png';
-import image11 from './images/skins/image11.png';
-import image12 from './images/skins/image12.png';
 
 ## 阅读前置条件
 
@@ -83,10 +83,11 @@ import image12 from './images/skins/image12.png';
 
 重要：字重属性 fontWeight 会影响字体的设置。
 
-> 注意两种情况：
-1. 当在「皮肤」中设置了字体后，「仓」中设置的字体会无效；
-2. 当「仓」设置了字体功能，而「皮肤」没有使用字体，则「皮肤」会应用「仓」中设置的字体。
->
+:::note[注意]
+两种情况：
+1. 「键盘皮肤」可以使用「仓」App 中的字体设置功能，一次设置，全部键盘生效；
+2. 当在「键盘皮肤」中设置了字体后，如「仓」App 中也设置的字体，则使用「键盘皮肤」下的字体；
+:::
 
 ### 键盘设置
 
@@ -168,7 +169,7 @@ symbolic:
 - 预编辑区：用来显示未上屏前键入的编码，如「ni’hao」。
 
     > 当开启「内嵌模式」后，编辑区会隐藏。
-    >
+
 - 工具栏区：当没有输入时，显示常用工具按键，如图片中所示；当键入编码时，则显示候选字。
 - 按键区：用来陈列键盘中的按键。
 
@@ -1243,8 +1244,9 @@ toolbarButton2ForegroundStyle:
 
 「图片描述文件」是用来说明拼合图片中包含的小图的位置、大小及「保护区域」信息。
 
-> 「保护区域」指图片放大后不可拉伸区域。
->
+:::tip[保护区域]
+「保护区域」指图片放大后不可拉伸区域。
+:::
 
 「图片描述文件」有两个要求：
 
@@ -1601,8 +1603,9 @@ IMG2:
 
 预编辑区高度，浮点类型，单位：point
 
-> 注意：当开启内嵌模式后，预编辑区会被隐藏。
->
+:::note[注意]
+当开启「内嵌模式」后，预编辑区会被隐藏。
+:::
 
 ### preedit
 
@@ -1659,12 +1662,14 @@ width 用来描述宽度，它可以是多种数据类型
 
 - 浮点，表示宽度的精确值，如 `width: 99.9`，宽度为 99.9 个 point。
 
-    > 注意：point 与 pixel 的区别。
-    >
+> 注意：point 与 pixel 的区别。
+
 - 字符串，表示宽度为总宽度的百分比值，如：`width: 85/375`，宽度为 `总宽度 * (85/375)`
 
-    > 技巧：当宽度不是一个精确的值，使用此种表示法更为方便。
-    >
+:::tip[技巧]
+当宽度不是一个精确的值，使用此种表示法更为方便。
+:::
+
 - 对象，当前仅有一个属性 `percentage` 用来表示百分比。如下：
 
     ```yaml
@@ -1681,7 +1686,6 @@ width 用来描述宽度，它可以是多种数据类型
     示例1表示宽度为 `总宽度 * 0.1`，示例2表示宽度为 `总宽度 * (85/375)`
 
     > 注意：示例2中的表达方式与 `width: 85/37` 表示的效果是相同的。但是示例1不用用 `width: 0.1` 或 `width: “0.1”` 替换。因为此种表示方式表示宽度为一个精确值，即 0.1 个 point。
-    >
 
 ### height
 
@@ -1727,7 +1731,9 @@ alignment 用来描述显示尺寸与物理尺寸不一致时，对齐的方向�
 | image | 字符串 | 图片描述文件中的键，具体请查阅[图片描述文件](#图片描述文件)。 |
 | targetScale | 浮点类型或对象类型，可选值。 | 对图片「显示尺寸」进行放大或缩小。参见 targetScale 属性 |
 
-> 技巧：背景样式中的图片无须设置此参数，因为背景样式中的图片会跟随 Cell 的显示尺寸大小拉伸。前景中的样式需要根据显示的效果，添加此参数控制显示尺寸。 |
+:::tip[技巧]
+技巧：背景样式中的图片无须设置此参数，因为背景样式中的图片会跟随 Cell 的显示尺寸大小拉伸。前景中的样式需要根据显示的效果，添加此参数控制显示尺寸。
+:::
 
 > 关于图片裁剪和显示的逻辑，请[查阅图片的显示与裁剪](#图片裁剪与显示)。
 
@@ -1947,7 +1953,6 @@ assetImageName 目前可以引用以下图片：
 ```
 
 > minX 与 minY 表示显示尺寸左上角在 x 或者 y 轴的坐标，
->
 
 所以当我们需要调节一个视图的位置时，只需要改变中心点的比例就可以：
 
@@ -1958,8 +1963,9 @@ assetImageName 目前可以引用以下图片：
 
 <Image src={image12} alt="" />
 
-> 注意: 文字（通过 text 属性设置）在一个尺寸大小下显示时，是水平居中，垂直居上的。但这不影响它的尺寸大小。类比来说，假设一张 A4 纸是它视图尺寸大小，那么显示就是在 A4 纸顶部居中位置写了字。
->
+:::note[注意]
+注意: 文字（通过 text 属性设置）在一个尺寸大小下显示时，是水平居中，垂直居上的。但这不影响它的尺寸大小。类比来说，假设一张 A4 纸是它视图尺寸大小，那么显示就是在 A4 纸顶部居中位置写了字。
+:::
 
 当我们需要**向下**调整小写字字母的图片位置时，只需要调整 y 轴的比例。如:
 
