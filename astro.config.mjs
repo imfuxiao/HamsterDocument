@@ -17,6 +17,12 @@ export default defineConfig({
       social: {
         github: "https://github.com/imfuxiao/HamsterDcouments",
       },
+      customCss: [
+        // 用于普通和半粗字重的 Fontsource 文件。
+        "@fontsource/ibm-plex-serif/400.css",
+        "@fontsource/ibm-plex-serif/600.css",
+        "./src/styles/custom.css",
+      ],
       sidebar: [
         {
           label: "指南",

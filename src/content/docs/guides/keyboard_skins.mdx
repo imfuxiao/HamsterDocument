@@ -4,6 +4,7 @@ tableOfContents:
   minHeadingLevel: 2
   maxHeadingLevel: 4
 ---
+import { FileTree, Icon } from '@astrojs/starlight/components';
 import { Image } from 'astro:assets';
 import image from './images/skins/image.png';
 import image1 from './images/skins/image1.png';
@@ -19,16 +20,19 @@ import image7 from './images/skins/image7.png';
 import image8 from './images/skins/image8.png';
 import image9 from './images/skins/image9.png';
 
+
 ## 阅读前置条件
 
 - YAML 语言
 
-    键盘皮肤配置基于 YAML 语言，如果是首次接触 YAML，请先学习 YAML。
+  键盘皮肤配置基于 YAML 语言，如果是首次接触 YAML，请先学习 YAML。
 
-    快速上手 YAML 可先阅读[阮一峰的《YAML 语言教程》](https://www.ruanyifeng.com/blog/2016/07/yaml.html)。
+  快速上手 YAML 可先阅读[阮一峰的《YAML 语言教程》](https://www.ruanyifeng.com/blog/2016/07/yaml.html)。
 
 
-注意：YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能的影响，「仓」内置的「键盘皮肤」功能中，在点击选中皮肤后，会将配置文件中的锚点语法转为普通的文本值（此时文件中的注释信息会丢失）。如果您不使用「仓」的界面配置，需要手工转换锚点, 并提供转换后的文件，注意转换后的文件为 `.文件名.keyboard`。
+:::note[注意]
+YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能的影响，「仓」内置的「键盘皮肤」功能中，在点击选中皮肤后，会将配置文件中的锚点语法转为普通的文本值（此时文件中的注释信息会丢失）。如果您不使用「仓」的界面配置，需要手工转换锚点, 并提供转换后的文件，注意转换后的文件为 `.文件名.keyboard`。
+:::
 
 ## 功能说明
 
@@ -40,18 +44,21 @@ import image9 from './images/skins/image9.png';
 
 在「仓」中，皮肤文件是以 `hskin` 作为为文件后缀名的 `zip` 类型的文件，其中目录结构如下：
 
-```bash
-├── config.yaml
-├── demo.png
-├── fonts（目录）
-├── dark（目录）
-│   ├── resources（目录）
-└── light（目录）
-    ├── resources（目录）
-```
+<FileTree>
 
-- config.yaml：`必需`，用于描述在不同设备下，及屏幕状态下的键盘配置。
+- demo.png
+- config.yaml
+- fonts
+- dark
+  - resources/
+- light
+  - resources/
+
+</FileTree>
+
+
 - demo.png：`非必须，但建议提供`。用于向用户展示皮肤外观样式。
+- config.yaml：`必需`，用于描述在不同设备下，及屏幕状态下的键盘配置。
 - fonts：`非必须`，用来存放字体文件，如果使用 iOS 系统内置字体，则不用提供。
 
     （请注意字体版权问题）。
