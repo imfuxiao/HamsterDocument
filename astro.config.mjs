@@ -11,8 +11,11 @@ export default defineConfig({
       logo: {
         src: "./src/assets/hamster.png",
       },
+      editLink: {
+        base: "https://github.com/imfuxiao/HamsterDocument/tree/main",
+      },
       social: {
-        github: "https://github.com/imfuxiao/Hamster",
+        github: "https://github.com/imfuxiao/HamsterDcouments",
       },
       sidebar: [
         {
