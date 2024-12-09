@@ -1,0 +1,102 @@
+---
+title: 词库同步
+---
+
+import { Image } from 'astro:assets';
+import syncImage from '../../../assets/Sync_002.png';
+
+## 同步功能
+
+目前在「仓」中，有两个不同的同步功能：「RIME 同步」和「iCloud 同步」。
+
+这两种同步功能，功能不同，使用场景也不同。
+
+RIME 引擎的同步功能，主要是同步不同设备的词库文件（当然也包含一些配置文件）。
+
+iCloud 同步使用的是苹果的文件同步功能，主要是将**文件**同步到云端。
+
+根据同步功能特点：
+
+* 场景一：使用自造词，且希望不同的设备可以同步自造词。建议使用：「RIME 同步」功能。
+* 场景二：不使用自造词，只希望同步输入方案及应用配置。建议使用：「iCloud 同步」功能。
+
+
+### RIME 同步
+
+RIME 同步是 RIME 内置的功能，主要用来同步输入方案中的词库文件。
+
+> 注意
+> RIME 同步功能只支持 「userdb」 类型（二进制格式）的词库。如果词库格式为 「tabledb」 格式（文本格式），则 RIME 同步功能无法支持。
+> 如何查看自己的输入方案是那种格式？
+> 在输入方案的 x.schema.yaml 文件中，查找 db_class 参数。
+
+#### 设置方法
+
+1. iOS系统设置 -> 通用 -> 键盘 -> 仓输入法，打开「完全访问权限」。
+
+    > 注意：这里必须开启「完全访问权限」，原因见[应用文件与键盘文件的区别](FilesManager.html#应用文件与键盘文件的区别)中的介绍。
+
+2. 打开「仓」，并进入 「RIME」 功能下，关闭「部署时覆盖键盘词库文件」选项。
+
+3. 进入「文件管理」功能，点击标签 「应用文件」，修改 `Rime` 目录下的 `installation.yaml` 文件。在文件内增加下面的配置示例：
+
+    ```yaml
+    installation_id: "hamster_6s"
+    sync_dir: "/private/var/mobile/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents/sync"
+    ```
+
+    > 注意：
+    > 1. 在「仓」的「RIME」 功能中，点击「RIME 重置」下的说明文字可复制上述模板内容，然后按需修改。
+    > 2. 如果文件`installation.yaml`不存在，可在「RIME」功能下，点击「重新部署」功能。当然自己手工新建这个文件也可以。
+
+    * `installation_id`: 用来区分不同设备的文件夹名称，如果不加此参数，RIME 默认会为当前设备生成一个「UUID」的文件夹名称。
+    * `sync_dir`: 用来指定不同设备下云端的同步路径，目前仓仅支持「iCloud」的方式。
+
+    `sync_dir`的同步路径需要特别注意：在 iOS/iPad OS 设备中，iCloud 的固定前缀为 `/private/var/mobile/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents`。
+
+    此路径是「仓」申请的 iCloud 上的路径，只有在此路径下，「仓」才有权限读取，其他 iCloud 路径「仓」是没有权限读取和写入的。
+
+    注意，MacOS/Windows平台下，这个路径会不一样，比如 MacOS 平台中，路径前缀为`$HOME/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents`
+
+    填写时，请把`$HOME`转为具体路径，可通过`echo $HOME/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents`命令获取具体路径。
+
+
+以上步骤在当前设备就配置完毕了，其他设备和平台，可以参考上面的步骤 3，需要注意的就是不同平台下`sync_dir`的填写路径了。
+
+设置成功后，您可运行「RIME 同步」功能，如果设置正确，您可以使用 iOS 内置应用 Files（中文系统名为：文件）查看 iCloud 中的文件，具体在`Browse/iCloud Drive/Hamster`（中文系统为：`浏览/iCloud云盘/仓输入法`）。
+
+### iCloud 同步
+
+iCloud同步主要是用来同步输入方案文件及应用配置文件，如果您使用自造词，且词库为「userdb」类型，请使用「RIME 同步」，因为iCloud同步可能会发生冲突，导致二进制的数据库文件受损。
+
+iCloud 同步有两个方向：「上传文件至 iCloud」 和「下载 iCloud 中的文件」
+
+「上传文件至 iCloud」：对应「iCloud同步」功能下的「拷贝应用文件至iCloud」，需要手动触发。
+「下载 iCloud 中的文件」：在开启「iCloud同步」功能下「iCloud」开关后，功能会自动运行。
+
+<Image src={syncImage} alt="iCloud同步" />
+
+### 拷贝应用文件至iCloud
+
+每次点击「拷贝应用文件至iCloud」后，会将「应用文件」下`SharedSupport`与`Rime`目录及文件上传至 iCloud 的「仓」目录中。
+
+即：`/private/var/mobile/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents/RIME` 目录下。
+
+如果您希望过滤掉不想要的文件或文件夹，可以使用 「iCloud 同步」功能下的正则过滤功能。举例：
+
+* `^.*[.]userdb.*$`: 表示过滤 userdb 目录及其包含的文件
+* `^.*build.*$`：表示过滤 build 目录及其包含的文件
+* `^.*SharedSupport.*$`：表示过滤 SharedSupport 目录及其包含的文件
+* `^.*[.]bin$`：表示过滤以 `.bin` 结尾的文件
+
+> 注意：不需要手工敲这些过滤表达式，点击功能下的说明文字即可复制。然后按个人需要修改。
+
+### 下载 iCloud 中的文件
+
+在打开「iCloud」开关后，每次触发“RIME 重新部署”时，会自动复制 iCloud 上的文件。
+
+指：`/private/var/mobile/Library/Mobile Documents/iCloud~dev~fuxiao~app~hamsterapp/Documents/RIME` 目录中的文件。
+
+在复制时，会比较相同文件名的文件，如果 iCloud 中的文件与本地文件名称相同，那么会使用 iCloud 中的文件覆盖掉本地文件。
+
+> 注意：如果您设置了正则过滤表达式，那么在复制时也会进行过滤处理。

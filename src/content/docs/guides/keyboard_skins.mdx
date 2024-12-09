@@ -1,0 +1,1979 @@
+---
+title: 键盘皮肤
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 4
+---
+import { Image } from 'astro:assets';
+import image from './images/skins/image.png';
+import image1 from './images/skins/image1.png';
+import image2 from './images/skins/image2.png';
+import image3 from './images/skins/image3.png';
+import image4 from './images/skins/image4.png';
+import image5 from './images/skins/image5.png';
+import image6 from './images/skins/image6.png';
+import image7 from './images/skins/image7.png';
+import image8 from './images/skins/image8.png';
+import image9 from './images/skins/image9.png';
+import image10 from './images/skins/image10.png';
+import image11 from './images/skins/image11.png';
+import image12 from './images/skins/image12.png';
+
+## 阅读前置条件
+
+- YAML 语言
+
+    键盘皮肤配置基于 YAML 语言，如果是首次接触 YAML，请先学习 YAML。
+
+    快速上手 YAML 可先阅读[阮一峰的《YAML 语言教程》](https://www.ruanyifeng.com/blog/2016/07/yaml.html)。
+
+
+注意：YAML 锚点语法需要递归的方式获取对应的值，考虑对键盘性能的影响，「仓」内置的「键盘皮肤」功能中，在点击选中皮肤后，会将配置文件中的锚点语法转为普通的文本值（此时文件中的注释信息会丢失）。如果您不使用「仓」的界面配置，需要手工转换锚点, 并提供转换后的文件，注意转换后的文件为 `.文件名.keyboard`。
+
+## 功能说明
+
+「键盘皮肤」是「仓输入法」（以下简称「仓」）全新的自定义键盘功能，您可以使用此功能定制个性化的键盘。
+
+「键盘皮肤」与已有功能[「自定义键盘」](https://ihsiao.com/apps/hamster/docs/CustomKeyboard.html)都可以完成对键盘的自定义，但「键盘皮肤」的功能更为强大，比如，支持跨行的布局，支持图片作为背景等等。
+
+## 皮肤文件
+
+在「仓」中，皮肤文件是以 `hskin` 作为为文件后缀名的 `zip` 类型的文件，其中目录结构如下：
+
+```bash
+├── config.yaml
+├── demo.png
+├── fonts（目录）
+├── dark（目录）
+│   ├── resources（目录）
+└── light（目录）
+    ├── resources（目录）
+```
+
+- config.yaml：`必需`，用于描述在不同设备下，及屏幕状态下的键盘配置。
+- demo.png：`非必须，但建议提供`。用于向用户展示皮肤外观样式。
+- fonts：`非必须`，用来存放字体文件，如果使用 iOS 系统内置字体，则不用提供。
+
+    （请注意字体版权问题）。
+
+- dark：`必须`，用于提供暗色模式下键盘配置文件及图片资源文件。
+    - resources：`必须`，用于存放图片及其图片描述文件。
+- light：`必须`，用于提供浅色模式下键盘配置文件及图片资源文件。
+    - resources：`必须`，用于存放图片及其图片描述文件。
+
+## 皮肤配置文件
+
+通过 `config.yaml` 文件描述在不同状态下应该使用的键盘配置。
+
+它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| name | 字符串，必须 | 皮肤名称 |
+| author | 字符串，必须 | 作者 |
+| fontFace | 对象，非必须 | 皮肤应用的字体，具体请查阅字体设置 |
+| pinyin | 对象，必须 | 中文键盘样式，具体请查阅键盘设置 |
+| alphabetic | 对象，必须 | 英文键盘样式，具体请查阅键盘设置 |
+| numeric | 对象，必须 | 数字键盘样式，具体请查阅键盘设置 |
+| symbolic | 对象，必须 | 符号键盘配置，具体请查阅键盘设置 |
+
+### 字体设置
+
+在 `config.yaml` 文件中通过 `fontFace` 属性声明字体。具体[查阅 fontFace 参数说明](https://www.notion.so/1320147ebd8a80da8f17f4d02e2894c1?pvs=21)。
+
+重要：字重属性 fontWeight 会影响字体的设置。
+
+> 注意两种情况：
+1. 当在「皮肤」中设置了字体后，「仓」中设置的字体会无效；
+2. 当「仓」设置了字体功能，而「皮肤」没有使用字体，则「皮肤」会应用「仓」中设置的字体。
+>
+
+### 键盘设置
+
+在 `config.yaml` 可以分别设置下面几种键盘：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| pinyin | 对象 | 必须，中文键盘 |
+| alphabetic | 对象 | 非必须，英文键盘 |
+| numeric | 对象 | 必须，数字键盘 |
+| symbolic | 对象 | 必须，符号键盘 |
+| 自定义名称 | 对象 | 非必须，自定义键盘 |
+
+注意：
+
+1. 在不提供英文键盘下情况下，可以通过 rime 的 ascii_mode 状态切换，达到英文输入的目的。
+2. 键盘可绑定输入方案，所以英文键盘可以绑定英文输入方案，这也是提供英文键盘的一大优势。 |
+
+以上键盘类型都包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| iPhone | 对象 | 表示当前设备为 iPhone 时采用的键盘配置，具体请查阅 iPhone 参数 |
+| iPad | 对象 | 表示当前设备为 iPad 时采用的键盘配置。具体请查阅 iPad 参数 |
+
+配置示例:
+
+```yaml
+author: 张三
+name: 这是一款测试的皮肤
+
+fontFace:
+  - url: "xx字体.otf"
+
+pinyin:
+  iPhone:
+    portrait: pinyin_26_portrait
+    landscape: pinyin_26_landscape
+  iPad:
+    portrait: pinyin_26_landscape
+    landscape: pinyin_26_landscape
+    floating: pinyin_26_portrait
+
+alphabetic:
+  iPhone:
+    portrait: alphabetic_26_portrait
+    landscape: alphabetic_26_landscape
+  iPad:
+    portrait: alphabetic_26_landscape
+    landscape: alphabetic_26_landscape
+    floating: alphabetic_26_portrait
+
+numeric:
+  iPhone:
+    portrait: numeric_9_portrait
+    landscape: numeric_9_landscape
+  iPad:
+    portrait: numeric_9_portrait
+    landscape: numeric_9_landscape
+    floating: numeric_9_portrait
+
+symbolic:
+  iPhone:
+    portrait: symbolic_portrait
+    landscape: symbolic_landscape
+  iPad:
+    portrait: symbolic_portrait
+    landscape: symbolic_landscape
+    floating: symbolic_portrait
+
+```
+
+## 键盘的布局
+
+在「键盘皮肤」功能中，把一个键盘分为三个区域：「预编辑区」，「工具栏区」，「按键区」，如下图：
+
+<Image src={image} alt="" />
+
+- 预编辑区：用来显示未上屏前键入的编码，如「ni’hao」。
+
+    > 当开启「内嵌模式」后，编辑区会隐藏。
+    >
+- 工具栏区：当没有输入时，显示常用工具按键，如图片中所示；当键入编码时，则显示候选字。
+- 按键区：用来陈列键盘中的按键。
+
+## 预编辑区
+
+预编辑区用来显示未上屏前的输入的编码，比如「ni'hao」。当开启「内嵌模式」后，预编辑区会被隐藏。
+
+### 高度
+
+预编辑区的高度由属性 `preeditHeight` 控制，单位为 point。
+
+配置示例：
+
+```yaml
+preeditHeight: 30
+```
+
+上述示例表示，预编辑区高度为30个 point。
+
+### 样式
+
+预编辑区样式由属性 `preedit` 控制，它可以自定义预编辑区的背景，前景，及微调编辑区显示位置。
+
+它包含以下属性:
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `insets` | 对象 | 指文字距离预编辑区四周的距离，用于微调预编辑区显示文字的位置，具体内容可查阅 insets 属性 |
+| `backgroundStyle` | 字符串，样式引用 | 设置预编辑区背景样式 |
+| `foregroundStyle` | 字符串，样式引用 | 设置预编辑区前景样式 |
+| `textColor` | 字符串 | 预编辑区文字颜色 |
+
+- `backgroundStyle` 背景样式，它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 可用来设计预编辑区的背景图片。具体查阅 normalImage 属性 |
+
+- `foregroundStyle` 前景样式，它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `textColor` | 字符串 | 预编辑区文字颜色 |
+| `fontSize` | 浮点 | 预编辑区文字大小，具体查阅 fontSize 属性 |
+| `fontWeight` | 枚举 | 预编辑区字重，具体查阅 fontWeight 文档属性 |
+
+配置示例：
+
+```yaml
+preedit:
+  insets: { left: 8, top: 2 }
+  backgroundStyle: preeditBackgroundStyle
+  foregroundStyle: preeditForegroundStyle
+
+preeditBackgroundStyle:
+  normalImage:
+    file: bj
+    image: IMG3
+
+preeditForegroundStyle:
+  textColor: 000000
+  fontSize: 16
+  fontWeight: regular
+```
+
+## 工具栏区
+
+工具栏区常显为功能按键，当在输入状态时，显示候选字。
+
+### 高度
+
+工具栏区高度由属性 `toolbarHeight` 控制，单位：point。
+
+配置示例：
+
+```yaml
+toolbarHeight: 35
+```
+
+上述示例表示工具栏区高度为35个 point。
+
+### 样式
+
+工具栏区样式由属性 `toolbar` 控制，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| backgroundStyle | 字符串类型，样式引用 | 工具栏背景样式 |
+| primaryButtonStyle | 字符串类型，样式引用 | 工具栏主按键样式。（左侧首个按键） |
+| secondaryButtonStyle | 字符串数组，样式引用 | 工具栏其他按键样式|
+| horizontalCandidateStyle | 字符串类型，样式引用 | 设置水平划动候选栏样式 |
+| verticalCandidateStyle | 字符串类型，样式引用 | 设置垂直划动候选栏样式 |
+| candidateContextMenu | 字符串类型，样式引用 | 用于扩展候选字长按后弹出框的操作选项。 |
+
+工具栏一共可以放置8个按键。去除主按键外，还有7个，`secondaryButtonStyle` 设置剩余的7个按键。 注意按键从右向左，按数组顺序排列。
+
+- backgroundStyle 工具栏背景样式目前仅支持图片，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 背景样式图片，具体请查阅 normalImage 属性 |
+
+- primaryButtonStyle 工具栏主按键样式，即左侧首个按键。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| backgroundStyle | 字符串，样式引用 | 按键的背景样式 |
+| foregroundStyle | 字符串，样式引用 | 按键的前景样式 |
+| action | 字符串或对象 | 按键的动作，具体请查阅行为 Action |
+
+- backgroundStyle 样式中包含下面属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalColor | 字符串 | 一般状态下，按键背景色 |
+| highlightColor | 字符串 | 按下状态时，按键背景色 |
+
+- foregroundStyle 样式包含下面属性
+
+当使用外部图片设置前景时，可使用下面属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 一般状态下，按键的前景图片，具体请查阅 normalImage 属性 |
+| highlightImage | 对象 | 按下状态时，按键的前景图片，具体请查阅 highlightImage 属性 |
+
+当使用文字时，可以使用下面属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| text | 字符串 | 定义按键显示的文字，可使用 JavaScript 动态显示当前文字。具体请查阅 JavaScript 扩展 |
+| normalColor | 字符串 | 一般状态下文字颜色，可参考颜色格式 |
+| highlightColor | 字符串 | 按下状态时，文字颜色，可参考颜色格式 |
+| fontSize | 浮点 | 字体大小，可查阅 fontSize 属性 |
+| fontWeight | 枚举 | 字重，可查阅 fontWeight 属性 |
+
+#### secondaryButtonStyle
+
+除主键外的其他按键的样式。数组类型，最多添加 7 个样式引用。每个样式的设置与 primaryButtonStyle 设置方式相同，具体请查阅 primaryButtonStyle 样式。
+
+#### horizontalCandidateStyle
+
+水平划动模式的候选字的样式。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| insets | 对象 | 调整水平划动区域的内距。具体参考 insets 属性 |
+| candidateStateButtonStyle | 字符串，样式引用 | 水平候选栏展开按键的样式。 |
+| highlightBackgroundColor | 字符串 | 选中状态下，候选字背景颜色。 |
+| preferredBackgroundColor | 字符串 | 首选字的背景颜色 |
+| preferredIndexColor | 字符串 | 首选字的序号颜色 |
+| preferredTextColor | 字符串 | 首选字的文字颜色 |
+| preferredCommentColor | 字符串 | 首选字的 comment 颜色 |
+| indexColor | 字符串 | 非首选候选字序号颜色 |
+| textColor | 字符串 | 非首选候选字文字颜色 |
+| commentColor | 字符串 | 非首选候选字 comment 颜色 |
+| indexFontSize | 浮点 | 候选字序号的字体大小 |
+| indexFontWeight | 枚举 | 候选字序号的字重 |
+| textFontSize | 浮点 | 候选字文字的字体大小 |
+| textFontWeight | 枚举 | 候选字文字的字重 |
+| commentFontSize | 浮点 | 候选字 comment 字体大小 |
+| commentFontWeight | 枚举 | 候选字 comment 字重 |
+
+- candidateStateButtonStyle 水平划动展开按键样式，它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| backgroundStyle | 字符串，样式引用 | 按键的背景样式 |
+| foregroundStyle | 字符串或字符串数组，样式引用 | 按键的前景样式 |
+
+其中 backgroundStyle 支持以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalColor | 字符串 | 一般状态下，按键的背景颜色。 |
+| highlightColor | 字符串 | 按下状态时，按键的背景颜色。 |
+
+其中 foregroundStyle 支持以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 一般状态下，按键的前景图片。具体请查阅 normalImage 参数。 |
+| highlightImage | 大中型 | 按下状态时，按键的前景图片。具体请查阅 highlightImage 参数。 |
+
+#### verticalCandidateStyle
+
+水平划动候选栏展开后，可垂直划动的视图。此视图页面布局是目前是固定的，上部分为候选字区域，最下面一行为按键区域。如图：
+
+<Image src={image1} alt="" />
+
+它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| insets | 对象类型 | 用于调整垂直划动面板的内距。具体请查阅 insets 参数。 |
+| bottomRowHeight | 浮点 | 底部最后一行的高度 |
+| backgroundStyle | 字符串，样式引用 | 背景样式设置 |
+| candidateStyle | 字符串，样式引用 | 候选字样式设置 |
+| pageUpButtonStyle | 字符串，样式引用 | 底部最后一行，候选字「上一页」按按键样式设置 |
+| pageDownButtonStyle | 字符串，样式引用 | 底部最后一行，候选字「下一页」按按键样式设置 |
+| returnButtonStyle | 字符串，样式引用 | 底部最后一行，返回键按键样式 |
+| backspaceButtonStyle | 字符串，样式引用 | 底部最后一行，删除键按键样式 |
+
+- backgroundStyle 背景样式设置，它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 背景图片设置，具体请查阅 normalImage 属性。 |
+
+- candidateStyle 候选字样式设置，它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| insets | 对象类型 | 候选字区域内距调整，具体请查阅 insets 参数。 |
+| backgroundColor | 字符串 | 候选字区域背景色 |
+| separatorColor | 字符串 | 分隔线颜色 |
+| highlightBackgroundColor | 字符串 | 选中状态下，候选字背景颜色。 |
+| preferredBackgroundColor | 字符串 | 首选字的背景颜色 |
+| preferredIndexColor | 字符串 | 首选字的序号颜色 |
+| preferredTextColor | 字符串 | 首选字的文字颜色 |
+| preferredCommentColor | 字符串 | 首选字的 comment 颜色 |
+| indexColor | 字符串 | 非首选候选字序号颜色 |
+| textColor | 字符串 | 非首选候选字文字颜色 |
+| commentColor | 字符串 | 非首选候选字 comment 颜色 |
+| indexFontSize | 浮点 | 候选字序号的字体大小 |
+| indexFontWeight | 枚举 | 候选字序号的字重 |
+| textFontSize | 浮点 | 候选字文字的字体大小 |
+| textFontWeight | 枚举 | 候选字文字的字重 |
+| commentFontSize | 浮点 | 候选字 comment 字体大小 |
+| commentFontWeight | 枚举 | 候选字 comment 字重 |
+
+- pageUpButtonStyle 上一页按键样式，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| backgroundStyle | 字符串，样式引用 | 按键背景样式 |
+| foregroundStyle | 字符串或字符串数组，样式引用 | 按键前景样式 |
+
+其中 backgroundStyle 与 foregroundStyle 都支持通过图片或者文字设置样式。
+
+- pageDownButtonStyle 下一页按键样式，它的设置方式同 pageUpButtonStyle。
+- returnButtonStyle 返回键样式，它的设置同 pageUpButtonStyle。
+- backspaceButtonStyle 删除键样式，它的设置同 pageUpButtonStyle。
+
+#### candidateContextMenu
+
+用于扩展候选字长按菜单选项。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| name | 字符串 | 操作名称 |
+| action | 字符串或对象 | 行为，具体请查阅行为 Action |
+
+## 按键区
+
+### 如何分割按键区的空间？
+
+在我们常见的键盘中，除了一些「异形键盘」，如「L形」、「扇形」等形状外，矩形形状的键盘都可以按类似 Excel 中的「行」与「列」分割空间，形成一个个的「区域」，每个「区域」放一个按键。
+
+基于此思路，「仓」使用三个关键字「**VStack**」「**HStack**」「**Cell**」描述对空间的分割：
+
+- VStack：表示按「列」分割空间，分割后的空间可再次分割。
+- HStack：表示按「行」分割空间，分割后的空间可再次分割。
+- Cell：表示分割后的最小单位空间，此空间不可以再分割，它是一个**矩形**（正方形也是矩形），类似 Excel 中的一个单元格。
+
+    > Cell 的外观、点击、划动、长按等行为，在 Cell 的外观与行为中会介绍。
+
+总结：Cell 是空间的最小单位，通过 VStack，HStack 对按键区分割，直到区域全部分割为 Cell 为止。
+
+这里可能有一个问题：在「仓」中，是否可以只使用 Cell 分割空间呢？答案是：不可以。增加 VStack 与 HStack 对空间分割的描述，是为了简化布局的复杂度。
+
+如何简化布局的复杂度？这里有三个默认约束：
+
+- 约束1：在同一列中，宽度相同且中心对齐。
+- 约束2：在同一行中，高度相同且中心对齐。
+- 约束3：同级中的元素类型必须一致。就是说，在同一行或同一列中的元素必须是 VStack，HStack，Cell 中其中一种。不能在同一行或同一列中，混合使用 VStack，HStack，Cell。
+
+下面看几个示例，说明下如何用这三个关键字分割「按键区」。
+
+<Image src={image2} alt="" />
+
+                                  示例1
+
+在示例1中如先按列（VStack）的分隔，不满足约束1。而先按行（HStack）分隔则满足约束，所以描述如下：
+
+```yaml
+keyboard:
+  subviews:
+    - HStack:
+        subviews:
+          - Cell: qButton
+          - Cell: wButton
+          - Cell: eButton
+          - Cell: rButton
+          - Cell: tButton
+          - Cell: yButton
+          - Cell: uButton
+          - Cell: iButton
+          - Cell: oButton
+          - Cell: pButton
+    - HStack:
+        subviews:
+          - Cell: aButton
+          - Cell: sButton
+          - Cell: dButton
+          - Cell: fButton
+          - Cell: gButton
+          - Cell: hButton
+          - Cell: jButton
+          - Cell: kButton
+          - Cell: lButton
+    - HStack:
+        subviews:
+          - Cell: shiftButton
+          - Cell: zButton
+          - Cell: xButton
+          - Cell: cButton
+          - Cell: vButton
+          - Cell: bButton
+          - Cell: nButton
+          - Cell: mButton
+          - Cell: backspaceButton
+    - HStack:
+        subviews:
+          - Cell: 123Button
+          - Cell: spaceButton
+          - Cell: enterButton
+```
+
+<Image src={image3} alt="" />
+
+                                   示例2
+
+在示例二中，先按行（HStack）分割，满足约束。先从列（VStack）分割，也满足约束。
+
+- 先按行分割，可以分为三行，其中第三行的空间还需要继续分割，如下
+
+```yaml
+keyboard:
+  subviews:
+    - HStack:
+        subviews:
+          - Cell: 123Button
+          - Cell: symbolButton1
+          - Cell: abcButton
+          - Cell: defButton
+          - Cell: backspaceButton
+    - HStack:
+        subviews:
+          - Cell: symbolButton2
+          - Cell: ghiButton
+          - Cell: jklButton
+          - Cell: mnoButton
+          - Cell: symbolButton3
+    - HStack:
+        subviews:
+          - VStack:
+              subviews:
+                - Cell: alphabeticButton
+          - VStack:
+              subviews:
+                - Cell: pqrsButton
+                - Cell: pinyinButton
+          - VStack:
+              subviews:
+                - HStack:
+                    subviews:
+                      - Cell: tuvButton
+                      - Cell: wxyzButton
+                - HStack:
+                    subviews:
+                      - Cell: spaceButton
+          - VStack:
+              subviews:
+                - Cell: enterButton
+```
+
+- 先按列分割，可以分为四列，注意第三列（VStack）还需要继续分隔
+
+```yaml
+keyboard:
+  subviews:
+    - VStack:
+        subviews:
+          - Cell: 123Button
+          - Cell: symbolButton1
+          - Cell: alphabeticButton
+    - VStack:
+        subviews:
+          - Cell: symbolButton2
+          - Cell: ghlButton
+          - Cell: pqrsButton
+          - Cell: pinyinButton
+    - VStack:
+        subviews:
+          - HStack:
+              subviews:
+                - Cell: abcButton
+                - Cell: defButton
+          - HStack:
+              subviews:
+                - Cell: jklButton
+                - Cell: mnoButton
+          - HStack:
+              subviews:
+                - Cell: tuvButton
+                - Cell: wxyzButton
+          - HStack:
+              subviews:
+                - Cell: spaceButton
+    - VStack:
+        subviews:
+          - Cell: backspaceButton
+          - Cell: symbolButton3
+          - Cell: enterButton
+```
+
+对比上面两种不同的描述，「先按列」的描述比「先按行」的描述简单。之所以这样，是因为约束3。
+
+我们再看一个示例：https://github.com/imfuxiao/Hamster/issues/564
+
+<Image src={image4} alt="" />
+
+                                    示例3
+
+在示例3中，「先按列分割」不满足约束1，只能「先按行分割」，描述如下：
+
+```yaml
+keyLayout:
+  subviews:
+    - HStack:
+        subviews:
+          - VStack:
+              subviews:
+                - HStack:
+                    subviews:
+                      - Cell: hpButton
+                      - Cell: shButton
+                      - Cell: zhButton
+                - HStack:
+                    subviews:
+                      - Cell: lButton
+                      - Cell: dButton
+                      - Cell: yButton
+                - HStack:
+                    subviews:
+                      - Cell: chButton
+                      - Cell: qButton
+                      - Cell: gButton
+          - VStack:
+              subviews:
+                - Cell: symbolicCollection
+          - VStack:
+              subviews:
+                - HStack:
+                    subviews:
+                      - Cell: bButton
+                      - Cell: xButton
+                      - Cell: msButton
+                - HStack:
+                    subviews:
+                      - Cell: wzButton
+                      - Cell: jkButton
+                      - Cell: rnButton
+                - HStack:
+                    subviews:
+                      - Cell: cfButton
+                      - Cell: tButton
+                      - Cell: backspaceButton
+    - HStack:
+        subviews:
+          - Cell: bottom1Button
+          - Cell: alphabeticButton
+          - Cell: bottom2Button
+          - Cell: spaceButton
+          - Cell: bottom3Button
+          - Cell: enterButton
+```
+
+### VStack 与 HStack 的尺寸
+
+默认相同级别的行，高度平均分配；相同级别的列，宽度平均分配。
+
+如下，键盘被分为四行，且四行高度相同
+
+```yaml
+keyboard:
+  subviews:
+    - HStack
+    - HStack
+    - HStack
+    - HStack
+```
+
+如下，键盘分为三列，且三列宽度相同
+
+```yaml
+keyboard:
+  subviews:
+    - VStack
+    - VStack
+    - VStack
+```
+
+当需要为 VStack 或 HStack 指定不同的宽度或高度时，就需要通过参数设置。
+
+VStack 与 HStack 通过 `style` 属性指定它的尺寸描述，`style` 的值是一个可以自定义的字符串，如下，`row1Style`，`row2Style` 是 `style` 的自定义的值。
+
+```yaml
+keyLayout:
+  subviews:
+    - HStack:
+        style: row1Style
+        subviews:
+        ...
+    - HStack:
+        style: row2Style
+        subviews:
+        ...
+...
+
+row1Style:
+  size:
+    height: 162
+
+row2Style:
+  size:
+    height: 54
+```
+
+> 技巧：根据约束1及约束2，相同级别的 HStack 宽度相同，所以可以省略 HStack 的 width 宽度的描述；而相同级别的 VStack 高度相同，所以省略 VStack 的 height 高度描述。
+>
+
+上例中 `row1Style` 是 HStack 自定义样式的值，它包含一个 `size` 属性，通过 size 可以设置分割区域的宽度或高度。具体请查阅 size 属性。
+
+### Cell 的外观及行为
+
+关键字 Cell 是一个固定的键，它的值是一个引用。如下所示，`Cell` 对应值是 `aButton` ，而它是对外部 `aButton` 的引用。
+
+```yaml
+...
+	- Cell: aButton
+...
+
+aButton:
+  size:
+    width:
+      percentage: 0.15
+    height:
+      percentage: 1
+```
+
+我们将 Cell 的外观及行为的定义放在外部 `aButton` 的属性中。
+
+系统提供了多个属性用来自定义，下面一一介绍。
+
+#### Cell 物理尺寸
+
+`size` 指 Cell 的物理尺寸大小，其中 width 表示 Cell 的宽度，height 表示 Cell 的高度。
+
+> 技巧：根据约束1及约束2，同一行的 Cell 高度相同，同一列中的 Cell 宽度相同，所以相同行中的 Cell 可以省略 `height`，相同列中的 cell 可以省略 `width`。
+>
+
+具体 size 如何填写，可以查阅 size 属性。
+
+#### Cell 显示尺寸
+
+`bounds` 指 Cell 的显示尺寸大小，默认情况下显示尺寸与[物理尺寸](#cell-物理尺寸)大小相等，此时可省略此属性。
+
+但两者也存在不一样大的情况。如下图，「红色」为物理尺寸区域，「黄色」为显示尺寸区域。
+
+<Image src={image5} alt="" />
+
+此种情况，需要通过设置属性 `bounds` 来调整显示尺寸，如下示例：
+
+```yaml
+...
+	- Cell: aButton
+...
+
+aButton:
+  size:
+    width:
+      percentage: 0.15
+    height:
+      percentage: 1
+   bounds:
+    width: 2/3
+    height:
+      percentage: 1
+    alignment: right
+```
+
+`bounds` 与 `size` 基本相同，都是调整大小的，只是 `bounds` 多了一个 `alignment` 属性，指示当显示宽度或高度与物理尺寸大小不一致时，需要向那个方向对齐。如上图所示中的 a 键需要向右对齐，而 l 键需要向左对齐。具体参数请查阅 bounds 属性。
+
+#### Cell 的背景样式
+
+背景样式通过 `backgroundStyle` 声明，它的值是一个引用，如下，`alphabeticBackgroundStyle` 是对外部的引用。
+
+```yaml
+qButton:
+  backgroundStyle: alphabeticBackgroundStyle
+...
+
+alphabeticBackgroundStyle:
+  normalImage:
+    file: anjian
+    image: IMG5
+  highlightImage:
+    file: anjian
+    image: IMG6
+```
+
+设置背景样式有两种情况：
+
+- 使用图片作为背景。可使用以下属性描述样式:
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 必须，普通状态下的背景图片。具体参数请查阅 normalImage。 |
+| highlightImage | 对象 | 可选，当按键按下时的背景图片，具体参数请查阅 highlightImage。 |
+| animation | 字符串，样式引用 | 可选，可以为背景设置动画 |
+
+示例
+
+```yaml
+# 字母按键背景样式
+alphabeticBackgroundStyle:
+  normalImage:
+    file: anjian
+    image: image1
+  highlightImage:
+    file: anjian
+    image: image2
+  animation: alphabeticBackgroundAnimation
+```
+
+- 不使用图片，使用原生的属性设置，比如自定义颜色，圆角，边框等属性设置。
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| type | 枚举 | 必须，目前固定值为 `original`，样式类型，用来表示当前背景使用原生属性设置。 |
+| insets | 对象 | 非必须，用来设置背景的内距，当内距为0时，背景尺寸等于Cell的显示尺寸，此时Cell之间没有间距。 |
+| normalColor | 字符串 | 必须，普通状态下的背景颜色 |
+| highlightColor | 字符串 | 必须，当按键按下时的背景颜色 |
+| cornerRadius | 浮点 | 非必须，背景圆角 |
+| borderSize | 浮点 | 非必须，背景边框大小，注意: 边框的颜色与大小必须同时设置。 |
+| normalBorderColor | 字符串 | 非必须，正常状态下背景边框颜色。 |
+| highlightBorderColor | 字符串 | 非必须，当按键按下时背景边框的颜色。 |
+| normalLowerEdgeColor | 字符串 | 非必须，为底部画一个描边，此值为正常状态下描边的颜色。值为空时，不画此描边。 |
+| highlightLowerEdgeColor | 字符串 | 非必须，为底部画一个描边，此值为按键按下时描边的颜色。值为空时，不画此描边。 |
+| normalShadowColor | 字符串 | 非必须，正常状态下阴影颜色，为空时不显示阴影。 |
+| highlightLowerEdgeColor | 字符串 | 非必须，当按键按下时，阴影的颜色，为空时不显示。 |
+| shadowRadius | 浮点 | 非必须，阴影的模糊半径，数值越大，阴影越模糊。 |
+| shadowOffset | 对象 | 非必须，阴影偏移量，具体请查阅 offset 。 |
+| animation | 对象 | 非必须，可以为背景设置一个动画。 |
+
+> 注意: 阴影的添加会消耗 CPU 资源，非必要不要添加，最好的做法是通过图片来设置。
+
+示例:
+
+```yaml
+alphabeticBackgroundStyle:
+  type: original
+  insets: { top: 6, left: 3, bottom: 6, right: 3 }
+  normalColor: FFFFFF
+  highlightColor: ABB0BA
+  cornerRadius: 5
+  normalLowerEdgeColor: 88898D
+  highlightLowerEdgeColor: 89898B
+  animation: alphabeticBackgroundAnimation
+```
+
+#### Cell 的前景样式
+
+键盘可以有不同状态，在不同状态下可以呈现不同样式。
+
+键盘状态分为以下几种:
+
+| 状态 | 对应样式名称 |
+| --- | --- |
+| 一般状态 | foregroundStyle |
+| Shift 大写状态 | uppercasedStateForegroundStyle |
+| Shift 锁定状态 | capsLockedStateForegroundStyle |
+| 预编辑状态（输入编码的状态） | preeditStateForegroundStyle |
+
+foregroundStyle 样式是基础样式，在任何状态下，如果不配置对应状态的样式，则都显示为 foregroundStyle 样式。
+
+而 preeditStateForegroundStyle 优先级最高，当键盘处理预编辑状态时，如果设置了此样式，则键盘会显示这个样式，而此时不区分 Shift 状态。
+
+| 样式属性 | 类型 | 说明 |
+| --- | --- | --- |
+| foregroundStyle | 必须，字符串或字符串数组，样式引用。 | 表示一般状态下 Cell 的前景样式 |
+| uppercasedStateForegroundStyle | 非必须，字符串或字符串数组，样式引用。 | 表示 Shift 大写状态下 Cell 的样式，当此样式不存在时，使用 `foregroundStyle` 样式 |
+| capsLockedStateForegroundStyle | 非必须，字符串或字符串数组，样式引用。 | 表示 Shift 锁定状态下 Cell 的样式，当此样式不存在时，使用 `foregroundStyle` 样式。 |
+| preeditStateForegroundStyle | 非必须，字符串或字符串数组，样式引用。 | 表示有输入且未上屏状态下 Cell 的样式，当此样式为不存在时，使用 `foregroundStyle` 样式。此样式优先级别最高，当与其他样式并存时，优先显示此样式。 |
+
+> 技巧：如果按键前景需要显示多个符号或者多个图片时，可以使用「数组」去引用样式。
+>
+
+示例：
+
+```yaml
+shiftButton:
+  foregroundStyle: shiftButtonForegroundStyle
+  uppercasedStateForegroundStyle: shiftButtonUppercasedForegroundStyle
+  capsLockedStateForegroundStyle: shiftButtonCapsLockedForegroundStyle
+  preeditStateForegroundStyle: shiftButtonPreeditForegroundStyle
+
+qButton:
+  backgroundStyle: alphabeticBackgroundStyle
+  foregroundStyle:
+    - qButtonForegroundStyle
+    - qButtonUpForegroundStyle
+  uppercasedStateForegroundStyle:
+    - qButtonUppercasedStateForegroundStyle
+    - qButtonUpForegroundStyle
+  capsLockedStateForegroundStyle:
+    - qButtonUppercasedStateForegroundStyle
+    - qButtonUpForegroundStyle
+```
+
+前景样式除了可以用固定的字符串的形式引用外，还支持通过 JavaScript 脚本动态返回字符串的形式引用样式。
+
+示例：
+
+```yaml
+lockButton:
+  foregroundStyle: |-
+    // JavaScript
+    function getText() {
+      return $getSymbolicKeyboardLockState() ? "lockButtonForegroundStyle" : "unlockButtonForegroundStyle";
+    }
+```
+
+脚本函数具体内容，可查阅[脚本](#脚本)内容。
+
+前景样式同背景样式，也分两种情况。
+
+- 使用图片作为前景。可使用以下属性描述:
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 必须，普通状态下的背景图片。具体参数请查阅 normalImage。 |
+| highlightImage | 对象 | 可选，当按键按下时的背景图片，具体参数请查阅 highlightImage。 |
+
+- 使用文字定义前景，可使用以下属性描述:
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| text | 字符串 | 必须，前景显示字符。可以使用 JS 动态生成字符。 |
+| normalColor | 字符串 | 必须，一般状态下字符颜色。 |
+| highlightColor | 字符串 | 非必须，按键按下时字符颜色。 |
+| fontSize | 浮点 | 非必须，字体大小。 |
+| fontWeight | 枚举 | 非必须，字重。注意: 字重的设置会影响当前设置的字体。 |
+| center | 对象 | 必须。调整字体显示位置。具体请查阅 center 属性。 |
+
+注意: 默认显示的文字是水平居中，垂直居上。如需居中显示，只需要调节 center.y 的值。
+
+#### Cell 的气泡
+
+当按键按下状态时，可显示按键气泡。可以通过 `hintStyle` 属性配置。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| insets | 对象 | 调整按键气泡的内距。 <br/> 当值为空，或值全部为零时，使用默认值： `insets: { top: 6, bottom: 6, left: 8, right: 8 }` |
+| backgroundStyle | 字符串，样式引用 | 气泡背景样式。 |
+| foregroundStyle | 字符串，样式引用 | 气泡前景样式。 |
+| swipeUpForegroundStyle | 字符串，样式引用 | 上划状态下，气泡前景样式。 |
+| swipeDownForegroundStyle | 字符串，样式引用 | 下划状态下，气泡前景样式。 |
+| swipeLeftForegroundStyle | 字符串，样式引用 | 左划状态下，气泡前景样式。 |
+| swipeRightForegroundStyle | 字符串，样式引用 | 右划状态下，气泡前景样式。 |
+
+- insets 气泡的内距
+
+气泡总尺寸为:
+
+```jsx
+宽度 = 当前按键可视尺寸的宽度 + insets.left + insets.right
+高度 = 当前按键可视尺寸的高度 + insets.top + insets.bottom
+```
+
+当 `insets` 为空，或 `insets` 全部为零时，使用默认值：
+`insets: { top: 6, bottom: 6, left: 8, right: 8 }`
+
+#### Cell 的长按符号列表
+
+当按键长按时，可显示一个符号列表视图。它可以通过 `holdSymbolsStyle` 属性配置。它包含以下属性。
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| insets | 对象 | 调整长按视图显示的内距。 <br/> 当值为空，或值全部为零时，使用默认值： `insets: { top: 3, bottom: 3, left: 8, right: 8 }` |
+| backgroundStyle | 字符串，样式引用 | 长按视图的背景样式 |
+| foregroundStyle | 字符串数组，样式引用 | 长按每个选项的样式。 |
+| actions | 数组 | 长按每个选项的行为。与 foregroundStyle 选项一一对应。  |
+| selectedStyle | 字符串，样式引用 | 选中状态下的样式。 |
+| selectedIndex | 整数 | 默认选中选项。 |
+
+- insets 长按视图的内距
+
+长按视图总尺寸为:
+
+```jsx
+宽度 = 当前按键可视尺寸的宽度 * 长按选项 + insets.left + insets.right
+高度 = 当前按键可视尺寸的高度 + insets.top + insets.bottom
+```
+
+当 `insets` 为空，或 `insets` 全部为零时，使用默认值：
+`insets: { top: 3, bottom: 3, left: 8, right: 8 }`
+
+#### Cell 行为
+
+当一个 Cell 被点击后，所产成的行为。在键盘不同的状态下，所产生的行为是不同的。
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| action | 字符串或对象 | 点击后的行为。具体请查阅行为 Action。 |
+| uppercasedStateAction | 字符串或对象 | 当键盘为大写状态或大写锁定状态时，点击后的行为。可以为空，为空时，使用 action 设置的值。 |
+| preeditStateAction | 字符串或对象 | 当键盘处于预编辑状态（有未上屏的输入选项）时，点击后的行为。为空时，使用 action 设置的值。 |
+| repeatAction | 字符串或对象 | 长按后，重复执行的行为。**为空值时，无任何操作**。 |
+| swipeUpAction | 字符串或对象 | 上划后执行的行为。为空值时，无任何操作。 |
+| swipeDownAction | 字符串或对象 | 下划后执行的行为。为空值时，无任何操作。 |
+| swipeLeftAction | 字符串或对象 | 左划后执行的行为。为空值时，默认为移动光标操作。 |
+| swipeRightAction | 字符串或对象 | 右划后执行的行为。为空值时，默认为移动光标操作。 |
+
+#### Cell 动画
+
+目前 Cell 在点击后可设置有关动画，它通过在前景或者背景样式中添加 animation 属性设置。此属性为数组类型。其中每个元素都应包含 type 属性。通过 type 指定当前的动画。
+
+#### type 动画类型
+
+动画类型目前支持以下几种类型：
+
+| 值 | 说明 |
+| --- | --- |
+| bounds | 表示动画类型为尺寸变化 |
+| apng | 表示动画类型为播放 apng 动画图片 |
+
+- 当值为 bounds 时，可通过以下属性设置动画：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| duration | 浮点 | 必须。动画持续时间，单位：毫秒，默认值: 40ms |
+| fromScale | 浮点 | 必须。动画开始时的尺寸比例。最大值为1，最小值为0。 |
+| toScale | 浮点 | 必须。动画结束时的尺寸比例。最大值为1，最小值为0。 |
+
+- 当值为 apng 时，表示播放 apng 格式动画。可通过以下属性设置：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| file | 字符串 | `必须`。apng文件名，不包含文件后缀。注意:默认文件后缀为 png |
+| targetScale | 浮点 | `非必须`。表示 apng 图片尺寸放大比例。默认会以图片尺寸（这里会通过屏幕 scale 将图片像素值转为 point 值）大小显示，可通过此参数调整图片显示的大小。 |
+| useCellVisibleSize | 布尔 | `非必须`。当不设置此值或者此值设置为 false 时，使用 apng 图片尺寸和targetScale 参数设置 apng 显示区域的尺寸。当此值设置为 true 时，则使用 Cell 的显示尺寸作为 apng 显示区域的尺寸。 |
+
+注意: APNG 文件大小请控制在 30 KB 以内（越小越好），动画时长控制在 1s 以内。过大的图片会导致键盘内存超限，被系统杀进程。
+
+#### 将 Cell 变为集合视图
+
+将 Cell 变为一个集合视图，需要以下属性设置：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| type | 枚举 | 集合视图类型。 |
+| dataSource | 字符串，数据引用 | 引用dataSource中声明的数据。 |
+| cellStyle | 字符串，样式引用 | 集合视图中单元格样式。 |
+
+- `type` 是一个枚举类型
+
+| 值 | 说明 |
+| --- | --- |
+| symbols | 符号列表，如数字键盘中左侧列表。 |
+| pinyin | 九键拼音列表。
+注意：此类型只能与「雾凇·九宫格」方案使用，因为这里的拼音筛选功能与方案是耦合的。
+如果您的九键方案不需要**拼音筛选**，请使用 `symbols` 类型。 |
+| classifiedSymbols | 符号键盘中，符号分类名称列表。 |
+| subClassifiedSymbols | 符号键盘中，点击分类后，显示的符号列表。 |
+
+- dataSource 用来引用全局对象中 dataSource 中定义的数据。如：
+
+```yaml
+collection:
+	...
+  dataSource: symbols
+  ...
+
+dataSource:
+  symbols:
+    - "+"
+    - { label: "😊", value: ":-)" }
+    - "*"
+    - "-"
+    - "/"
+    - "()"
+    - "."
+    - "@"
+    - ","
+    - "#"
+    - ":"
+    - "_"
+    - "="
+    - "?"
+    - "￥"
+```
+
+- cellStyle 声明集合中单元格的样式。它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| backgroundStyle | 字符串，样式引用 | 集合中单元格背景样式 |
+| foregroundStyle | 字符串，样式引用 | 集合中单元格前景样式 |
+
+## 脚本
+
+目前「前景样式」「背景样式」以及样式中的「text」属性都可以设置为 JS 字符串。从而可以动态的设置样式。
+
+示例1: 背景样式使用 JS
+
+```yaml
+backgroundStyle: |-
+  // JavaScript
+  function getText() {
+    let type = $getReturnKeyType();
+    if (type === 1 || type === 4) {
+      return "blueSystemButtonBackgroundStyle";
+    }
+    return "systemButtonBackgroundStyle";
+  }
+
+## 系统按键背景样式
+systemButtonBackgroundStyle:
+  normalImage:
+    file: anjian
+    image: image2
+  highlightImage:
+    file: anjian
+    image: image1
+
+## 系统按键背景样式
+blueSystemButtonBackgroundStyle:
+  normalImage:
+    file: anjian
+    image: image3
+  highlightImage:
+    file: anjian
+    image: image1
+```
+
+示例2: 前景样式使用 JS
+
+```yaml
+foregroundStyle: |-
+  // JavaScript
+  function getText() {
+    let type = $getReturnKeyType();
+    if (type === 1 || type === 4) {
+      return "enterButtonWhiteForegroundStyle";
+    }
+    return "enterButtonBlackForegroundStyle";
+  }
+
+enterButtonWhiteForegroundStyle:
+  text: "前往"
+  normalColor: ffffff
+  highlightColor: ffffff
+  fontSize: 16
+  ##  fontWeight: regular
+  center:
+    y: 0.8
+
+enterButtonBlackForegroundStyle:
+  text: |-
+    // JavaScript
+    function getText() {
+      const type = $getReturnKeyType();
+      switch (type) {
+        case 1:
+          return "前往";
+        case 3:
+          return "加入";
+        case 4:
+          return "前往";
+        case 6:
+          return "搜索"
+        case 7:
+          return "发送"
+        case 9:
+          return "完成";
+        default:
+          return "换行";
+      }
+    }
+  <<: *systemButtonForegroundStyle
+```
+
+示例3: text 属性中使用 JS
+
+```yaml
+toolbarButton2ForegroundStyle:
+  text: |-
+    // JavaScript
+    function getText() {
+      return $getRimeOptionState("ascii_mode") ? "英" : "中";
+    }
+  normalColor: 575757
+  highlightColor: 575757
+  fontSize: 16
+```
+
+### 使用说明
+
+1. 使用 YAML 语法 `|`（`|-`表示删除字符串末尾的换行符） 符号保留 JavaScript 脚本中的换行符；
+2. 字符串必须以 `// JavaScript` 开头；
+3. JavaScript 函数签名固定为 `getText` ，且返回值为字符串；
+
+内置函数：
+
+| 函数名 | 说明 | 入参 | 返回值 |
+| --- | --- | --- | --- |
+| `$getRimeOptionState` | 获取 rime 引擎 option 的状态，如 `ascii_state` | rime 中 option 的值，如：`ascii_state` | 布尔值 |
+| `$getRimePreedit` | 获取 rime 引擎中 preedit 字符串。 | 无 | 字符串 |
+| `$getRimeCandidates` | 获取 rime 引擎中的候选字。 | 无 | 数组类型，其中每个元素都为一个 [Candidate 对象](#candidate-对象) |
+| `$getSymbolicKeyboardLockState` | 获取符号键盘锁定状态 | 无 | 布尔值 |
+| `$getReturnKeyType` | 当前回车键建议显示文字。 | 无 | 整数，表示系统推荐回车键显示文字。 |
+
+```yaml
+  text: |-
+    // JavaScript
+    function getText() {
+      const candidate = $getRimeCandidates()
+      if (candidate) {
+        return candidate[0].text;
+      }
+      const preedit = $getRimePreedit();
+      return preedit;
+    }
+```
+
+#### Candidate 对象
+
+候选字，包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| index | 整数 | 候选序号，从0开始 |
+| text | 字符串 | 候选字 |
+| comment | 字符串 | 候选字 comment 信息 |
+
+#### 系统推荐回车键显示文字
+
+| 值 | 说明 |
+| --- | --- |
+| 0 | `default` 指定了回车键的可见标题为“换行”。 |
+| 1 | go 前往 |
+| 2 | google |
+| 3 | join 加入 |
+| 4 | next 前往 |
+| 5 | route  |
+| 6 | search 搜索 |
+| 7 | send 发送 |
+| 8 | yahoo  |
+| 9 | done 完成 |
+| 10 | emergencyCall |
+| 11 | continue |
+
+## 图片裁剪与显示
+
+「键盘皮肤」中的图片要求使用拼合图片，即将皮肤中用到的多个图片拼合为一张大的图片。相比使用单张小图片，这样做能够带来很多方面的好处：如内存使用，图片载入时间等等。
+
+但这种设计需要使用「图片描述文件」。
+
+### 图片描述文件
+
+「图片描述文件」是用来说明拼合图片中包含的小图的位置、大小及「保护区域」信息。
+
+> 「保护区域」指图片放大后不可拉伸区域。
+>
+
+「图片描述文件」有两个要求：
+
+1. 文件内容使用 YAML 语言描述；
+2. 文件名称需与「图片名」保持一致。（「图片名」不包含文件后缀）。
+
+举例，假设有一张 `beijing.png` 的图片，它包含了两张小图片。它的图片描述文件为 `beijing.yaml` 其内容如下：
+
+```yaml
+IMG1:
+  rect:
+    x: 0
+    y: 0
+    width: 110
+    height: 120
+  insets:
+    top: 50
+    bottom: 50
+    left: 35
+    right: 35
+IMG2:
+  rect:
+    x: 0
+    y: 150
+    width: 110
+    height: 120
+  insets:
+    top: 50
+    bottom: 50
+    left: 35
+    right: 35
+```
+
+上面内容中分别描述了名为 `IMG1` 与 `IMG2` 两张小图片，图片属性如下：
+
+- `rect` 表示图片的位置及大小信息，具体查阅 `rect` 属性。
+- `insets` 表示**图片中不可被拉伸**的区域，它使用 top，bottom，left，right 四个方向描述，分别表示图片在这四个方向中，有多少区域是不可以被拉伸。具体查阅 insets 属性。如示例中的 `IMG1`，它的顶部（top），有 50 个像素是不可以被拉伸的。
+
+### 图片显示的过程
+
+图片在显示的过程中，会分为三个步骤：
+
+- 裁剪图片：按「图片表述文件」中的位置、大小信息裁剪图片；
+- 图片处理：根据 Cell 的「显示尺寸」与图片大小比较，得到一个比例，按这个值等比例缩小图片；
+- 显示图片：按「图片描述文件」中「保护区域」信息显示图片
+
+#### 裁剪图片
+
+这一步会按照图片描述文件中 `rect` 参数的位置及大小信息，裁剪出所需的图片。
+
+#### 图片处理
+
+这里分几种情况：
+
+- 图片宽度大于等于显示尺寸宽度，且图片高度小于显示尺寸:
+
+
+    ```jsx
+    比例 = 显示尺寸宽度 / 图片宽度
+    图片宽度 = 比例 * 图片宽度
+    图片高度 = 比例 * 图片高度
+    ```
+
+- 图片高度大于等于显示尺寸高度，且图片宽度小于显示尺寸:
+
+    ```jsx
+    比例 = 显示尺寸高度 / 图片高度
+    图片宽度 = 比例 * 图片宽度
+    图片高度 = 比例 * 图片高度
+    ```
+
+- 图片高度大于等于显示尺寸高度，且图片宽度大于等于显示尺寸宽度:
+
+    ```jsx
+    // 取比例中最小值
+    比例 = min(显示尺寸高度 / 图片高度, 显示尺寸宽度 / 图片宽度)
+    图片宽度 = 比例 * 图片宽度
+    图片高度 = 比例 * 图片高度
+    ```
+
+
+- 图片尺寸小于显示尺寸时，图片不做处理。
+
+注意：
+
+1. 显示尺寸单位是 `point`，而图片尺寸的单位是 `pixel`，这里比较时，会将显示尺寸转为 pixel 后在做比较；
+2. 设计图片时一般会以 3 倍的 pixel 的大小出图，这样图片不会模糊。
+
+#### 显示图片
+
+显示图片的过程有一些默认的规则：
+
+1. 在「背景样式」中的图片，会根据 cell 的「显示尺寸」拉伸，在拉伸的过程中，会依据「图片描述文件」中「保护区域」要求，拉伸非保护区域中的内容。
+2. 在「前景样式」的图片尺寸，会等比例拉伸图片，同时也会遵守「保护区域」的要求。
+
+## 仿系统键盘按键设计
+
+<Image src={image6} alt="" />
+
+已 iPhoneX 屏幕尺寸为例，
+
+| 物理宽度 | 物理高度 | 像素宽度 | 像素高度 | PPI | Scale |
+| --- | --- | --- | --- | --- | --- |
+| 375 | 812 | 1125 | 2436 | 458 | 3 |
+|  |  |  |  |  |  |
+
+字母按键可视区域宽度（单位：pixel）: 1125 / 10 = 112.5（包含左右留白），左右留白共: 18
+
+因高度可以自定义，这里 iPhoneX 键盘按键高度 126 （单位：pixel），不包含上下留白区域。上下留白区域共：36。
+
+圆角：15，底部阴影: 3
+
+颜色:
+
+| 名称 | 颜色（浅色模式） | 颜色（暗色模式） |
+| --- | --- | --- |
+| 字母按键 | FFFFFF | 707070 |
+| 字母按键底部阴影 | 88898D | 1E1E1E |
+| 系统按键 | ABB0BA | 4C4C4C |
+| 系统按键底部阴影 | 89898B | 1D1D1D |
+| 回车键（蓝色） | 0279FE | 0279FE |
+| 回车键底部阴影（蓝色） | 696967 | 191716 |
+| 气泡边框 | 69686A | 6E6E6E |
+| 气泡阴影 | 797B7E | 1A1A1A |
+| 键盘背景色（FC表示1%的透明度） | D1D2D9FC | 2C2C2CFC |
+
+## 颜色格式
+
+「键盘皮肤」功能中的颜色字符串只支持 `RGB` 格式，不支持 `BGR` 格式。
+
+设置时无须以`#`开头。
+
+配置示例：
+
+```yaml
+ textColor: 454D3D
+ textColor: 454D3DFF
+```
+
+颜色可以是6位，也可以是8位，如果是8位，则后两位表示透明度，其中 `00` 表示全透明，`ff` 表示无透明度。
+
+| 透明度 | 16进制表示 |
+| --- | --- |
+| 100% | 00（全透明） |
+| 99% | 03 |
+| 98% | 05 |
+| 97% | 07 |
+| 96% | 0A |
+| 95% | 0D |
+| 94% | 0F |
+| 93% | 12 |
+| 92% | 14 |
+| 91% | 17 |
+| 90% | 1A |
+| 89% | 1C |
+| 88% | 1E |
+| 87% | 21 |
+| 86% | 24 |
+| 85% | 26 |
+| 84% | 29 |
+| 83% | 2B |
+| 82% | 2E |
+| 81% | 30 |
+| 80% | 33 |
+| 79% | 36 |
+| 78% | 38 |
+| 77% | 3B |
+| 76% | 3D |
+| 75% | 40 |
+| 74% | 42 |
+| 73% | 45 |
+| 72% | 47 |
+| 71% | 4A |
+| 70% | 4D |
+| 69% | 4F |
+| 68% | 52 |
+| 67% | 54 |
+| 66% | 57 |
+| 65% | 59 |
+| 64% | 5C |
+| 63% | 5E |
+| 62% | 61 |
+| 61% | 63 |
+| 60% | 66 |
+| 59% | 69 |
+| 58% | 6B |
+| 57% | 6E |
+| 56% | 70 |
+| 55% | 73 |
+| 54% | 75 |
+| 53% | 78 |
+| 52% | 7A |
+| 51% | 7D |
+| 50% | 80 |
+| 49% | 82 |
+| 48% | 85 |
+| 47% | 87 |
+| 46% | 8A |
+| 45% | 8C |
+| 44% | 8F |
+| 43% | 91 |
+| 42% | 94 |
+| 41% | 96 |
+| 40% | 99 |
+| 39% | 9C |
+| 38% | 9E |
+| 37% | A1 |
+| 36% | A3 |
+| 35% | A6 |
+| 34% | A8 |
+| 33% | AB |
+| 32% | AD |
+| 31% | B0 |
+| 30% | B3 |
+| 29% | B5 |
+| 28% | B8 |
+| 27% | BA |
+| 26% | BD |
+| 25% | BF |
+| 24% | C2 |
+| 23% | C4 |
+| 22% | C7 |
+| 21% | C9 |
+| 20% | CC |
+| 19% | CF |
+| 18% | D1 |
+| 17% | D4 |
+| 16% | D6 |
+| 15% | D9 |
+| 14% | DB |
+| 13% | DE |
+| 12% | E0 |
+| 11% | E3 |
+| 10% | E6 |
+| 9% | E8 |
+| 8% | EB |
+| 7% | ED |
+| 6% | F0 |
+| 5% | F2 |
+| 4% | F5 |
+| 3% | F7 |
+| 2% | FA |
+| 1% | FC |
+| 0% | FF（完全不透明） |
+
+## 行为
+
+行为也叫 `Action`，设置不同行为，与键盘交互时所产生的不同的效果。
+
+1. `Action` 设置为字符串时，可以是以下的值。
+
+| 值 | 说明 |
+| --- | --- |
+| backspace | 表示物理键盘的退格键 |
+| enter | 表示物理键盘的回车键 |
+| shift | 表示物理键盘的 Shift 键 |
+| tab | 表示物理键盘的 Tab 键 |
+| space | 表示物理键盘的空格键 |
+| dismissKeyboard | 表示隐藏当前键盘 |
+| systemSettings | 表示打开仓主应用 |
+| nextKeyboard | 表示切换 iOS 系统其他键盘 |
+| pageUp | 上一页，用于「符号键盘」中分类符号翻页。 |
+| pageDown | 下一页，用于「符号键盘」中分类符号翻页。 |
+| symbolicKeyboardLockStateToggle | 切换「符号键盘」锁定状态，当锁定状态下，符号键盘不会返回主键盘。 |
+
+1. `Action` 设置为对象时，可以包含以下属性。
+
+| 属性 | 类型 | 说明 | 示例 |
+| --- | --- | --- | --- |
+| character | ASCII 单个字符 | 发送给 RIME 的单个字符 | `{ character: w }` |
+| symbol | 字符串 | 直接上屏的字符，不会与 RIME 交互 | `{ symbol: w }`
+`{ symbol: W }`
+`{ symbol: abc }`  |
+| shortcutCommand | 枚举 | 说明，键盘快捷指令，具体[查阅快捷指令](#快捷指令-shortcutcommand)。 | `{ shortcutCommand: "#重输" }` |
+| sendKeys | 字符串 | 发送给 RIME 引擎的多个字符，具体[查阅 SendKey](#sendkeys)。 | `{ sendKeys: "Control+l" }` |
+| openURL | 字符串 | 用于打开某个链接 | `{ openURL: "weixin://" }` |
+| keyboardType | 枚举 | 用于切换键盘，具体[查阅键盘类型](#键盘类型)。 | `{ keyboardType: alphabetic }` |
+
+### 快捷指令 ShortcutCommand
+
+快捷指令 `shortcutCommand` 是一个枚举值，它包含以下值：
+
+| 值 | 说明 |
+| --- | --- |
+| `#简繁切换` 或 `#繁简切换` | 用于切换 RIME 引擎中的简体繁体，
+注意：需要为系统配置当前输入方案简繁切换的 option 的值。
+可查阅 hamster.yaml 中的 rime 下的 switchSimplifiedOrTraditionalOption 选项 |
+| `#中英切换` | 用于切换 RIME 引擎中的 `ascii_mode` 状态，具体效果取决于当前输入方案的 ascii 的设置。 |
+| `#行首` | 将光标移动到开始位置。
+注意：由于 iOS 系统限制，此功能可能并不会移动到文档的开始位置。实际使用中，可能会移动到某个换行位置处。 |
+| `#行尾` | 将光标移动到结束位置。
+注意：可能会遇到 `#行首` 指令同样的问题，原因一致。 |
+| `#次选上屏` | 当存在多个候选字时，执行此指令会上屏序号为2的候选字。 |
+| `#三选上屏` | 当存在多个候选字时，执行此指令会上屏序号为3的候选字。 |
+| `#方案切换` | 打开方案切换页面 |
+| `#换行` | 光标处输入 `\r\n` |
+| `#Enter` | 光标处输入 `\n` |
+| `#重输` | 清空当前未上屏的预输入编码及候选字 |
+| `#上个输入方案` | 切换当前输入方案为上个输入方案，若上个输入方案为空，则切换为排序为第二位的输入方案。
+如果当前输入方案列表只有一个，则没有任何效果。 |
+| ~~#左手模式（不可用）~~ | 单手模式下的左手模式 |
+| ~~#右手模式（不可用）~~ | 单手模式下的右手模式 |
+| `#RimeSwitcher` | 执行 RIME 引擎的 switcher 模式 |
+| ~~#emojiKeyboard（不可用）~~ | 打开 Emoji 键盘 |
+| `#symbolKeyboard` | 打开符号键盘 |
+| `#numberKeyboard` | 打开数字键盘 |
+| `#左移` | 光标向左移动一位 |
+| `#右移` | 光标向右移动一位 |
+| `#剪切` |  |
+| `#复制` |  |
+| `#粘贴` |  |
+| `#selectText` |  |
+| `#deleteText` |  |
+| `#撤销` |  |
+| `#重做` |  |
+| `#showPhraseView` |  |
+| `#showPasteboardView` |  |
+| `#toggleScriptView` |  |
+
+### SendKeys
+
+指令 `sendKeys` 用于发送给 RIME 引擎多个字符。
+
+`sendKeys` 有两种配置模式：
+
+- 发送多个字符给 RIME 引擎，示例 `{ sendKeys: "nihao" }`
+- 发送组合键给 RIME 引擎，此时需要使用 `+` 符号分隔按键所表示的字符，示例 `{ sendKeys: "Control+l" }`
+
+按键字符串可以设置为以下的值：
+
+| 值 | 说明 |
+| --- | --- |
+| `shift` 或 `Shift` | 表示物理按键 Shift 键 |
+| `ctrl` 或`control` 或 `Control` | 表示物理按键 Ctrl 键 |
+| `alt` 或 `Alt` | 表示物理按键 Alt 键 |
+| `cmd` 或 `command` | 表示物理按键 Command 键 |
+| `cap` 或 `capslock` | 表示物理按键 Caps Lock 键 |
+
+### 键盘类型
+
+系统支持以下键盘类型：
+
+| 值 | 说明 |
+| --- | --- |
+| pinyin | 中文键盘 |
+| alphabetic | 英文键盘 |
+| numeric | 数字键盘 |
+| symbolic | 符号键盘 |
+| 自定义名称 | 自定义键盘 |
+
+## 配置属性
+
+### preeditHeight
+
+预编辑区高度，浮点类型，单位：point
+
+> 注意：当开启内嵌模式后，预编辑区会被隐藏。
+>
+
+### preedit
+
+预编辑区样式设置，对象类型，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| insets | 对象 | 调整预编辑区文本位置，具体查阅 insets 属性 |
+| backgroundStyle | 字符串，样式引用 |  |
+| foregroundStyle | 字符串，样式引用 |  |
+
+### toolbarHeight
+
+工具栏区高度，浮点类型，单位：point
+
+### toolbar
+
+工具栏样式设置，对象类型，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `backgroundStyle` | 字符串，样式引用 | 设置工具栏的背景 |
+| `primaryButtonStyle` | 字符串，样式引用 | 设置工具栏主按键样式 |
+| `secondaryButtonStyle` | 字符串数组，样式引用 | 设置工具栏非主按键样式 |
+| `horizontalCandidateStyle` | 字符串，样式引用 | 设置水平划动候选字样式 |
+| `verticalCandidateStyle` | 字符串，样式引用 | 设置垂直展开候选字样式 |
+
+工具栏 `backgroundStyle` 属性样式包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| normalImage | 对象 | 具体查阅 normalImage 属性 |
+
+工具栏 `primaryButtonStyle` 属性样式包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| `backgroundStyle` | 字符串，样式引用 | 工具栏主按键背景样式 |
+| `foregroundStyle` | 字符串，样式引用 | 工具栏主按键前景样式 |
+| `action` | 多种类型 | 工具栏主按键行为，具体查阅行为 |
+
+### size
+
+`size` 用来描述一个区域的物理尺寸大小。它是一个对象，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| width | 对象/字符串/浮点 | 见 width 属性 |
+| height | 对象/字符串/浮点 | 见 height 属性 |
+
+### width
+
+width 用来描述宽度，它可以是多种数据类型
+
+- 浮点，表示宽度的精确值，如 `width: 99.9`，宽度为 99.9 个 point。
+
+    > 注意：point 与 pixel 的区别。
+    >
+- 字符串，表示宽度为总宽度的百分比值，如：`width: 85/375`，宽度为 `总宽度 * (85/375)`
+
+    > 技巧：当宽度不是一个精确的值，使用此种表示法更为方便。
+    >
+- 对象，当前仅有一个属性 `percentage` 用来表示百分比。如下：
+
+    ```yaml
+    ## 示例1
+    size:
+      width:
+        percentage: 0.1
+    ## 示例2
+    size:
+      width:
+        percentage: 85/375
+    ```
+
+    示例1表示宽度为 `总宽度 * 0.1`，示例2表示宽度为 `总宽度 * (85/375)`
+
+    > 注意：示例2中的表达方式与 `width: 85/37` 表示的效果是相同的。但是示例1不用用 `width: 0.1` 或 `width: “0.1”` 替换。因为此种表示方式表示宽度为一个精确值，即 0.1 个 point。
+    >
+
+### height
+
+height 用来描述高度，它与 width 表达方式相同，请参考 width 属性。
+
+### bounds
+
+`bounds` 用来描述一个区域的显示尺寸大小。它是一个对象，它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| width | 对象/字符串/浮点 | 见 width 属性 |
+| height | 对象/字符串/浮点 | 见 height 属性 |
+| alignment | 枚举 | 见 alignment 属性 |
+
+### alignment
+
+alignment 用来描述显示尺寸与物理尺寸不一致时，对齐的方向。
+
+这是一个枚举类型，值如下表：
+
+| 值 | 说明 |
+| --- | --- |
+| left | 左对齐 |
+| leftTop | 左上对齐 |
+| leftBottom | 左下对齐 |
+| right | 右对齐 |
+| rightTop | 右上对齐 |
+| rightBottom | 右下对齐 |
+| center | 居中对齐 |
+| centerTop | 居中靠上对齐 |
+| centerBottom | 居中靠下对齐 |
+
+### normalImage
+
+表示正常状态下的图片，它是一个对象，它有两种情况，
+
+- 情况1，使用外部图片文件，此时通过下面的属性设置
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| file | 字符串 | 图片文件名称，因图片必须使用 png 格式，所以当前无须包含文件后缀。 |
+| image | 字符串 | 图片描述文件中的键，具体请查阅[图片描述文件](#图片描述文件)。 |
+| targetScale | 浮点类型或对象类型，可选值。 | 对图片「显示尺寸」进行放大或缩小。参见 targetScale 属性 |
+
+> 技巧：背景样式中的图片无须设置此参数，因为背景样式中的图片会跟随 Cell 的显示尺寸大小拉伸。前景中的样式需要根据显示的效果，添加此参数控制显示尺寸。 |
+
+> 关于图片裁剪和显示的逻辑，请[查阅图片的显示与裁剪](#图片裁剪与显示)。
+
+- 情况2，使用系统内置图片（SF Symbol），此时通过下面的属性设置
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| systemImageName | 字符串 | SF Symbol 中图片名称。 <br />注意：图片需要支持 iOS 16+ |
+| normalColor | 字符串，RGB格式，无须加`#`前缀 | 一般状态下的颜色。 |
+| highlightColor | 字符串，RGB格式，无须加`#`前缀 | 高亮状态下颜色，比如按键按下时的状态。 |
+| fontSize | 浮点 |  |
+
+- 情况3，使用「仓」内置的图片。（注意：内置图片不支持任意放大与缩小）
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| assetImageName | 字符串 | 「仓」内置图片名称 |
+| normalColor | 字符串，RGB格式，无须加`#`前缀 | 一般状态下的颜色。 |
+| highlightColor | 字符串，RGB格式，无须加`#`前缀 | 高亮状态下颜色，比如按键按下时的状态。 |
+
+assetImageName 目前可以引用以下图片：
+
+- chineseState
+
+<Image src={image7} alt="" />
+
+- chineseState2
+
+<Image src={image8} alt="" />
+
+- englishState
+
+<Image src={image9} alt="" />
+
+- englishState2
+
+<Image src={image10} alt="" />
+
+### highlightImage
+
+表示高亮状态下的图片，比如按键按下时的状态，集合视图中被选中的状态等。其属性与 normalImage 相同，参见 normalImage 属性。
+
+### rect
+
+使用二维坐标说明一个元素的尺寸及位置，对象类型。属性如下：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| x | 浮点 | x 轴坐标 |
+| y | 浮点 | y 轴坐标 |
+| width | 浮点 | 宽度，如果用于描述图片，则单位为像素。 |
+| height | 浮点 | 高度，如果用于描述图片，则单位为像素。 |
+
+此二维坐标系左上角为原点，x 轴向右增长，y 轴向下增长。
+
+### insets
+
+用来设置一个元素距离边边框的距离。属性如下：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| top | 浮点 | 距离顶部边框的距离，默认为0。 |
+| bottom | 浮点 | 距离底部边框的距离，默认为0。 |
+| left | 浮点 | 距离左侧边框的距离，默认为0。 |
+| right | 浮点 | 距离右侧边框的距离，默认为0。 |
+
+### fontSize
+
+字体大小，浮点类型。
+
+### fontWeight
+
+字重，枚举类型。可省略，默认为空。
+
+注意：字重的设置会影响自定义字体功能。如过使用字重，请使用与字重匹配的字体。
+
+| 值 | 说明 |
+| --- | --- |
+| ultraLight |  |
+| thin |  |
+| light |  |
+| regular | 默认值 |
+| medium |  |
+| semibold |  |
+| bold |  |
+| heavy |  |
+| black |  |
+
+<Image src={image11} alt="" />
+
+### textColor
+
+文字颜色，字符串类型，`RBG` 格式。参见[颜色格式](#颜色格式)。
+
+### targetScale
+
+可以为浮点类型，也可以为对象类型。
+
+- 浮点类型
+
+    表示对尺寸的宽度与高度同时放大或缩小。如：`targetScale: 1.5` 表示对尺寸的高度和宽度同时放大1.5倍。
+
+
+- 对象类型
+
+    可以对尺寸中的宽度和高度分别设置。
+
+    | 属性 | 类型 | 说明 |
+    | --- | --- | --- |
+    | x | 浮点类型 | 对宽度放大或缩小的比例 |
+    | y | 浮点类型 | 对高度放大或缩小的比例 |
+
+    如下，对宽度缩小到原宽的 0.8 倍，对高度缩小到原宽的 0.75 倍。
+
+    ```yaml
+    targetScale:
+      x: 0.8
+      y: 0.75
+    ```
+
+
+### fontFace
+
+字体设置，数组类型，其中数组中的每个元素为一个字体类型。字体按数组顺序设置优先级别。
+
+每个字体包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| url | 字符串 | fonts 目录下的字体文件名称，包含文件后缀。 |
+| name | 字符串 | 系统内置字体名称。
+当 name 与 url 同时存在，则 name 优先。 |
+| ranges | 数组类型，非必须 | 字体 Unicode 生效范围，可以为一个字体设置多个范围，具体查阅 ranges 参数。 |
+
+### ranges
+
+某个字体的 Unicode 生效范围。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| location | 整数，必须 | 字符 unicode 值 |
+| length | 整数，必须 | 范围长度 |
+
+`location + length` 为一个字体 Unicode 的生效区间。
+
+注意：字重属性（fontWeight）设置会影响到字体的优先级及 ranges 生效范围。
+
+### iPhone
+
+表示当前设备为 iPhone 时采用的键盘设置。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| portrait | 字符串 | 竖屏状态下采用的键盘配置 |
+| landscape | 字符串 | 横屏状态下采用的键盘配置 |
+
+注意：
+
+1. 字符串内置为配置文件名，不包含文件后缀；
+2. 配置文件后缀固定为 `yaml`。
+
+### iPad
+
+表示当前设备为 iPad 时采用的键盘配置文件。它包含以下属性：
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| portrait | 字符串 | 竖屏状态下采用的键盘配置 |
+| landscape | 字符串 | 横屏状态下采用的键盘配置 |
+| floating | 字符串 | 浮动模式下采用的键盘配置 |
+
+注意：
+
+1. 字符串内置为配置文件名，不包含文件后缀；
+2. 配置文件后缀固定为 `yaml`。
+
+### ~~offset（不推荐使用，建议使用 center 替换）~~
+
+以 point 为单位，调节视图的位置。
+
+注意: Cell 的尺寸在不同分辨率下大小不同，根据 offset 定位一个视图，在不同的 iPhone 尺寸下，会存在偏差。推荐使用 center 参数。
+
+它包含以下属性
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| x | 浮点 | x轴位置 |
+| y | 浮点 | y轴位置 |
+
+以 Cell 的左上角为原点:
+
+- x > 0，视图向右偏移 x 个 point，x < 0，视图向左偏移 x 个 point。
+- y > 0，视图向下偏移 y 个 point，y < 0，视图向上偏移 y 个 point。
+
+### center
+
+一个比例值，用于设置中心点位置，从而调整显示位置。已 Cell 的左上角为原点
+
+它包含以下属性:
+
+| 属性 | 类型 | 说明 |
+| --- | --- | --- |
+| x | 浮点 | x轴位置的比例。
+`值为0`，表示中心点在显示尺寸 x 轴的原点位置。
+`值为1`，表示中心点在显示尺寸 x 轴的最大点位置。
+`当大于 1 时`，会超过显示尺寸值 x 轴的最大位置。 |
+| y | 浮点 | y轴位置的比例。
+`值为0`，表示中心点在显示尺寸 y 轴的原点位置。
+`值为1`，表示中心点在显示尺寸 y 轴的最大点位置。
+`当大于 1 时`，会超过显示尺寸值 y 轴的最大位置。 |
+
+默认情况下，中心点与 Cell 的显示尺寸的中心点位置是相同的。此时它的 center 值为 (0.5,0.5)，中心点坐标:
+
+```jsx
+中心点 x 轴坐标 = Cell.显示尺寸.minX + Cell.显示尺寸.width * 0.5
+中心点 y 轴坐标 = Cell.显示尺寸.minY + Cell.显示尺寸.height * 0.5
+```
+
+> minX 与 minY 表示显示尺寸左上角在 x 或者 y 轴的坐标，
+>
+
+所以当我们需要调节一个视图的位置时，只需要改变中心点的比例就可以：
+
+- x > 0.5 时，表示视图向右移动，x < 0.5 时，表示视图向左移动。
+- y > 0.5 时，表示视图向下移动，y < 0.5 时，表示视图向上移动。
+
+我们看一个示例：
+
+<Image src={image12} alt="" />
+
+> 注意: 文字（通过 text 属性设置）在一个尺寸大小下显示时，是水平居中，垂直居上的。但这不影响它的尺寸大小。类比来说，假设一张 A4 纸是它视图尺寸大小，那么显示就是在 A4 纸顶部居中位置写了字。
+>
+
+当我们需要**向下**调整小写字字母的图片位置时，只需要调整 y 轴的比例。如:
+
+```yaml
+center:
+  y: 0.6
+```
+
+当我们向右且向下调整数字或符号这些文字时，可以这样做:
+
+```yaml
+center:
+	x: 0.75
+  y: 0.6
+```
+
+offset 是通过 point 调节。而 center 是通过比例调节，所以在不同的屏幕尺寸下，offset调节后的显示效果存在差异，而 center 不会。所以推荐使用 center 调整位置。

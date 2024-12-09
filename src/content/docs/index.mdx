@@ -1,36 +1,34 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: 欢迎使用「仓输入法」
+description: 这里是「仓输入法」的使用指南
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  tagline: 这里是「仓输入法」的使用指南
   image:
-    file: ../../assets/houston.webp
+    file: ../../assets/hamster.png
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: 阅读指南
+      link: /apps/hamster/docs/guides/intro/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
-      icon: external
-      variant: minimal
+icon: external
+variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+## 下一步
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="输入方案" icon="pencil" href="input_schema">
+        <LinkCard title="如何在「仓」中使用其它「输入方案」" href="/apps/hamster/docs/guides/input_schema" />
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="文件管理" icon="add-document">
+        <LinkCard title="理解「仓」中的文件机制" href="/apps/hamster/docs/guides/file_manager" />
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+	<Card title="应用设置" icon="setting">
+        <LinkCard title="解锁更多应用配置" href="/apps/hamster/docs/guides/settings" />
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="自定义键盘" icon="open-book">
+        <LinkCard title="个性化你的键盘外观" href="/apps/hamster/docs/guides/keyboard_skins" />
 	</Card>
 </CardGrid>
