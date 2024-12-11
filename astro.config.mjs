@@ -19,10 +19,22 @@ export default defineConfig({
       },
       customCss: [
         // 用于普通和半粗字重的 Fontsource 文件。
+        "@fontsource/ibm-plex-serif/100.css",
+        "@fontsource/ibm-plex-serif/200.css",
+        "@fontsource/ibm-plex-serif/300.css",
         "@fontsource/ibm-plex-serif/400.css",
+        "@fontsource/ibm-plex-serif/500.css",
         "@fontsource/ibm-plex-serif/600.css",
-        "@fontsource/noto-sans-sc/400.css",
+        "@fontsource/ibm-plex-serif/700.css",
+        "@fontsource/noto-sans-sc/100.css",
+        "@fontsource/noto-sans-sc/200.css",
+        "@fontsource/noto-sans-sc/300.css",
+        "@fontsource/noto-sans-sc/300.css",
+        "@fontsource/noto-sans-sc/500.css",
         "@fontsource/noto-sans-sc/600.css",
+        "@fontsource/noto-sans-sc/700.css",
+        "@fontsource/noto-sans-sc/800.css",
+        "@fontsource/noto-sans-sc/900.css",
         "./src/styles/custom.css",
       ],
       sidebar: [
@@ -62,10 +74,7 @@ export default defineConfig({
         },
         {
           label: "应用更新",
-          items: [
-            { label: "更新日志", slug: "updates/changelog" },
-            { label: "版本历史", slug: "updates/history" },
-          ],
+          items: [{ label: "更新日志", slug: "updates/changelog" }],
         },
       ],
     }),
