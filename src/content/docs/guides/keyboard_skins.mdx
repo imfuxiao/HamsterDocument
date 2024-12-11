@@ -2007,3 +2007,23 @@ center:
 ```
 
 offset 是通过 point 调节。而 center 是通过比例调节，所以在不同的屏幕尺寸下，offset调节后的显示效果存在差异，而 center 不会。所以推荐使用 center 调整位置。
+
+### floatTargetScale
+
+可选参数，浮动键盘尺寸缩放比例。默认值为: 0.85。
+
+:::note[注意]
+此参数仅对浮动键盘有效。
+:::
+
+示例:
+
+```yaml
+# 长与宽均缩放 0.85
+floatTargetScale: 0.85
+
+# 长与宽设置不同的缩放
+floatTargetScale:
+  x: 0.86
+  y: 0.6
+```
