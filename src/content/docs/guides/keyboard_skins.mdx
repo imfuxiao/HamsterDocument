@@ -399,6 +399,7 @@ toolbarHeight: 35
 | insets | 对象类型 | 候选字区域内距调整，参见[insets](#insets) |
 | backgroundColor | 字符串 | 候选字区域背景色 |
 | separatorColor | 字符串 | 分隔线颜色 |
+| cornerRadius | 浮点 | 候选区域圆角半径 |
 | highlightBackgroundColor | 字符串 | 选中状态下，候选字背景颜色。 |
 | preferredBackgroundColor | 字符串 | 首选字的背景颜色 |
 | preferredIndexColor | 字符串 | 首选字的序号颜色 |
@@ -991,7 +992,21 @@ lockButton:
 | foregroundStyle | 字符串数组，样式引用 | 长按每个选项的样式。 |
 | actions | 数组 | 长按每个选项的行为。与 foregroundStyle 选项一一对应。  |
 | selectedStyle | 字符串，样式引用 | 选中状态下的样式。 |
-| selectedIndex | 整数 | 默认选中选项。 |
+| selectedIndex | 整数 | 初始选中选项。 |
+
+:::note[注意]
+对于键盘左右两侧的按键，`selectedIndex` 选项很重要。
+
+比如标准键盘最右侧的 P 键，如果长按时，有多个选项，而 `selectedIndex` 设置为0，表示默认选择首个选项。
+
+此时手指已在键盘最右侧了，无法再向右划动了，于是无法通过划动选择其他选项。
+
+总结：
+
+1. 键盘最左侧区域的长按，`selectedIndex` 设置为 0。
+2. 键盘最右侧区域的长按，`selectedIndex` 设置为最大值。
+3. 其他按键，请按选项数量以及按键位置的实际情况设置 `selectedIndex`。
+:::
 
 - insets 长按视图的内距
 
