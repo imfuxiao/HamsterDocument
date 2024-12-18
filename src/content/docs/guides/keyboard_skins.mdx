@@ -1042,7 +1042,7 @@ lockButton:
 
 目前 Cell 在点击后可设置有关动画，它通过在前景或者背景样式中添加 animation 属性设置。此属性为数组类型。其中每个元素都应包含 type 属性。通过 type 指定当前的动画。
 
-#### type 动画类型
+##### type 动画类型
 
 动画类型目前支持以下几种类型：
 
@@ -1060,6 +1060,21 @@ lockButton:
 | fromScale | 浮点 | 必须。动画开始时的尺寸比例。最大值为1，最小值为0。 |
 | toScale | 浮点 | 必须。动画结束时的尺寸比例。最大值为1，最小值为0。 |
 
+示例:
+
+```yaml
+- type: bounds
+  duration: 40
+  repeatCount: 1
+  fromScale: 1
+  toScale: 0.87
+- type: bounds
+  duration: 80
+  repeatCount: 1
+  fromScale: 0.87
+  toScale: 1
+```
+
 - 当值为 apng 时，表示播放 apng 格式动画。可通过以下属性设置：
 
 | 属性 | 类型 | 说明 |
@@ -1069,7 +1084,18 @@ lockButton:
 | useCellVisibleSize | 布尔 | `非必须`。当不设置此值或者此值设置为 false 时，使用 apng 图片尺寸和targetScale 参数设置 apng 显示区域的尺寸。当此值设置为 true 时，则使用 Cell 的显示尺寸作为 apng 显示区域的尺寸。 |
 | zPosition | 浮点 | `非必须`。默认 apng 动画在最上层显示，如需调整到下层，可以设置为 `-1` 。注意此时键盘背景及按键的透明度，如没有透明度，动画效果看不到。|
 
-注意: APNG 文件大小请控制在 30 KB 以内（越小越好），动画时长控制在 1s 以内。过大的图片会导致键盘内存超限，被系统杀进程。
+:::note[注意]
+APNG 文件大小请控制在 30 KB 以内（越小越好），动画时长控制在 1s 以内。过大的图片会导致键盘内存超限，被系统杀进程。
+:::
+
+示例:
+
+```yaml
+- type: apng
+  file: animation
+  zPosition: -1
+```
+
 
 - 当值为 emit 时，可通过以下属性设置动画:
 
@@ -1087,7 +1113,22 @@ lockButton:
 | alphaBegin | 浮点 | `非必须`，图片开始透明度，默认值为 1。1 表示无透明度，0 表示全透明 |
 | alphaEnd | 浮点 | `非必须`，图片结束透明度，默认值为 0.3。同 alphaBegin 参数说明 |
 
+示例:
 
+```yaml
+- type: emit
+  file: [01, 02, 03, 04]
+  duration: 1000
+  targetScale: 0.3
+  enableRandomImage: true
+  randomPositionX: 20
+  randomPositionY: 15
+  rotationBegin: 0
+  rotationEnd: 6.25
+  randomRotation: 2
+  alphaBegin: 1
+  alphaEnd: 0.3
+```
 
 
 #### 将 Cell 变为集合视图
@@ -1105,9 +1146,7 @@ lockButton:
 | 值 | 说明 |
 | --- | --- |
 | symbols | 符号列表，如数字键盘中左侧列表。 |
-| pinyin | 九键拼音列表。
-注意：此类型只能与「雾凇·九宫格」方案使用，因为这里的拼音筛选功能与方案是耦合的。
-如果您的九键方案不需要**拼音筛选**，请使用 `symbols` 类型。 |
+| pinyin | 九键拼音列表。 <br /> 注意：此类型只能与「雾凇·九宫格」方案使用，因为这里的拼音筛选功能与方案是耦合的。<br />如果您的九键方案不需要**拼音筛选**，请使用 `symbols` 类型。 |
 | classifiedSymbols | 符号键盘中，符号分类名称列表。 |
 | subClassifiedSymbols | 符号键盘中，点击分类后，显示的符号列表。 |
 
