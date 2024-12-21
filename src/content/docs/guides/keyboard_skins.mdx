@@ -1623,6 +1623,7 @@ IMG2:
 | shortcutCommand | 枚举 | 说明，键盘快捷指令，参见[快捷指令](#快捷指令-shortcutcommand)。 | `{ shortcutCommand: "#重输" }` |
 | sendKeys | 字符串 | 发送给 RIME 引擎的多个字符，参见[SendKey](#sendkeys)。 | `{ sendKeys: "Control+l" }` |
 | openURL | 字符串 | 用于打开某个链接 | `{ openURL: "weixin://" }` |
+| runScript | 字符串 | 执行某个脚本。<br /> 当脚本名称重复时，执行首个脚本。<br /> 排序方式按脚本的「自定义排序」升序，「是否收藏」，「创建时间」降序 三者依次排序 | `{ runScript: "脚本名称" }` |
 | keyboardType | 枚举 | 用于切换键盘，参见[键盘类型](#键盘类型)。 | `{ keyboardType: alphabetic }` |
 | floatKeyboardType | 枚举 | 在当前键盘上层浮动显示一个键盘。<br /> 键盘类型可自定义，参见[键盘类型](#键盘类型)。 | `{ floatKeyboardType: alphabetic }` |
 
@@ -2033,7 +2034,7 @@ assetImageName 目前可以引用以下图片：
 
 ### center
 
-一个比例值，用于设置中心点位置，从而调整显示位置。已 Cell 的左上角为原点
+一个比例值，用于设置中心点位置，从而调整显示位置。以 Cell 的左上角为原点
 
 它包含以下属性:
 

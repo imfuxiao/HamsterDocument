@@ -28,7 +28,7 @@ async function output() {
 
 功能入口：「剪贴板」-> 「脚本」，点击右上角 `...` 图标，选择「变量」功能。
 
-需要注意的是，为了区分脚本中程序定义的变量，注入的变量会已 `$` 符号开头。
+需要注意的是，为了区分脚本中程序定义的变量，注入的变量会以 `$` 符号开头。
 
 比如您在变量功能中定义了变量 `token`，那么注入后的变量名为 `$token`。
 
@@ -75,7 +75,7 @@ async function output() {
 * `body`, 可选, 默认为空, 类型: Object, key 为 String 类型, Value 可以为 任何 JavaScript 基础类型
 * `timeout`, 可选, 默认 15, 类型: Int, http 请求超时时间，单位为秒
 
-$http 默认会已 json 格式编码 `body`，并发送请求。如果您需要发送 `a=b&c=d` 格式，请为 `header` 添加 `Content-Type:application/x-www-form-urlencoded` 参数。
+$http 默认会以 json 格式编码 `body`，并发送请求。如果您需要发送 `a=b&c=d` 格式，请为 `header` 添加 `Content-Type:application/x-www-form-urlencoded` 参数。
 
 返回值： `$http` 返回 Object 类型，对象中包含以下参数
 
