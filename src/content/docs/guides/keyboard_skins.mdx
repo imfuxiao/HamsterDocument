@@ -20,10 +20,6 @@ import image7 from './images/skins/image7.png';
 import image8 from './images/skins/image8.png';
 import image9 from './images/skins/image9.png';
 
-:::tip[测试功能]
-商店版本暂无法使用
-:::
-
 ## 阅读前置条件
 
 - YAML 语言
@@ -1627,11 +1623,6 @@ IMG2:
 | keyboardType | 枚举 | 用于切换键盘，参见[键盘类型](#键盘类型)。 | `{ keyboardType: alphabetic }` |
 | floatKeyboardType | 枚举 | 在当前键盘上层浮动显示一个键盘。<br /> 键盘类型可自定义，参见[键盘类型](#键盘类型)。 | `{ floatKeyboardType: alphabetic }` |
 
-:::note[浮动键盘]
-浮动键盘最大宽度、高度为当前键盘区域的 85%。当需要缩小浮动键盘的区域时，可使用 `insets` 属性设置。
-
-`insets` 属性可用于 `keyboardType` 的样式中，也可用于 `keyboardType` 中的 `backgroundStyle` 中。
-:::
 
 ### 快捷指令 ShortcutCommand
 
@@ -2107,3 +2098,16 @@ floatTargetScale:
   x: 0.86
   y: 0.6
 ```
+
+### rimeSchema
+
+可选参数，用于为当前布局绑定一个输入方案。字符串类型，值为输入方案的ID。
+
+> 浮动键盘布局不支持此参数。
+
+示例:
+
+```yaml
+rimeSchema: "double_pinyin_flypy"
+```
+
