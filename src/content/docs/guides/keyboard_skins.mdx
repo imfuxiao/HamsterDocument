@@ -1287,7 +1287,8 @@ toolbarButton2ForegroundStyle:
 
 | 函数名 | 入参 | 返回值 | 说明 |
 | --- | --- | --- | --- |
-| `$getRimeOptionState` |  字符串 | 布尔值 | 获取 rime 引擎 option 的状态。<br />如 `ascii_state` |
+| `$getRimeOptionState` |  字符串 | 布尔值 | 获取 rime 引擎 option 的状态。<br />如 `ascii_state`。<br /> 当 rime 引擎没有启动完成时，返回值为 null |
+| `$getRimeOptionLabel` |  字符串 | 字符串 | 获取 rime 引擎 option 的状态对应的字符串。<br />如 `ascii_state`。<br /> 当 rime 引擎没有启动完成时，返回值为 null |
 | `$getRimePreedit` | 无 | 字符串 | 获取 rime 引擎中 preedit 字符串 |
 | `$getRimeCandidates` | 无 | 数组类型 <br/> 其中每个元素都为一个 [Candidate 对象](#candidate-对象) | 获取 rime 引擎中的候选字 |
 | `$getSymbolicKeyboardLockState` | 无 | 布尔值 | 获取符号键盘锁定状态 |
