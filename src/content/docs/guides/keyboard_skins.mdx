@@ -1621,6 +1621,7 @@ IMG2:
 | sendKeys | 字符串 | 发送给 RIME 引擎的多个字符，参见[SendKey](#sendkeys)。 | `{ sendKeys: "Control+l" }` |
 | openURL | 字符串 | 用于打开某个链接 | `{ openURL: "weixin://" }` |
 | runScript | 字符串 | 执行某个脚本。<br /> 当脚本名称重复时，执行首个脚本。<br /> 排序方式按脚本的「自定义排序」升序，「是否收藏」，「创建时间」降序 三者依次排序 | `{ runScript: "脚本名称" }` |
+| runTranslateScript | 字符串 | 执行某个翻译专用脚本。<br />**在打开交互页面后，请勿移动「主应用」的光标，否则会导致翻译文字改写异常。**<br />「主应用」指键盘上方的应用，如「浏览器」、「记事本」等。<br /> 当脚本名称重复时，执行首个脚本。<br /> 排序方式按脚本的「自定义排序」升序，「是否收藏」，「创建时间」降序 三者依次排序 | `{ runTranslateScript: "脚本名称" }` |
 | keyboardType | 枚举 | 用于切换键盘，参见[键盘类型](#键盘类型)。 | `{ keyboardType: alphabetic }` |
 | floatKeyboardType | 枚举 | 在当前键盘上层浮动显示一个键盘。<br /> 键盘类型可自定义，参见[键盘类型](#键盘类型)。 | `{ floatKeyboardType: alphabetic }` |
 
@@ -1661,6 +1662,7 @@ IMG2:
 | `#showPasteboardView` |  |
 | `#toggleScriptView` |  |
 | `#clearSystemPasteboard` | 清空系统剪贴板中内容 |
+| `#capsLocked` | 键盘大写锁定切换 |
 
 ### SendKeys
 
