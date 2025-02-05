@@ -2114,3 +2114,62 @@ floatTargetScale:
 rimeSchema: "double_pinyin_flypy"
 ```
 
+### keySounds
+
+可选参数，用于设置按键音效。数组类型，数组中的每个元素为一个音效配置。
+
+数组中的每个元素支持两种配置方式:
+
+* 方式1: 为输入类型按键，系统类型按键，删除按键设置音效
+
+| 类型 | 配置的key | 说明 |
+| --- | --- | --- |
+| 输入类型按键 | `inputKeySound` | 包含 `character`,`symbol` 等 |
+| 系统类型按键 | `systemKeySound` | 包含回车键，shift键，tab键等 |
+| 删除键 | `deleteKeySound` | 即 backspace 键 |
+
+示例：
+
+```yaml
+inputKeySound: "input.aiff"
+```
+
+* 方式2: 为指定 action 设置音效。
+
+> 如果你愿意，用此方式可以为 26 个字母设置不同的音效。
+
+| key | 说明 |
+| --- | --- |
+| action | 指定 action，与设置按键 action 格式相同 |
+| url | 音效文件路径 |
+
+示例：
+
+```yaml
+{ action: space, url: "beezlefm.wav" }
+```
+
+:::note[注意]
+* 按键音文件仅支持 aiff、wav 格式文件
+* 按键音文件可以放在 `light/resources` 和 `dark/resources` 目录下，此时只需要填写文件名，如 `inputKeySound: "input.aiff"`。这种配置可以做到明暗主题下按键音效不同。
+* 按键音文件也可以放在 `sounds` 目录下，此时需要为文件名添加 `sounds/` 前缀，如 `inputKeySound: "sounds/input.aiff"`。如果明暗主题下的音效相同，推荐使用此种方式配置，减少皮肤总的大小。
+:::
+
+示例
+
+```yaml
+# 按键音设置，文件位置在 light/resources 与 dark/resources 目录下
+keySounds:
+  - inputKeySound: "input.aiff"
+  - deleteKeySound: "delete.aiff"
+  - systemKeySound: "system.aiff"
+  - { action: space, url: "beezlefm.wav" }
+
+# 按键音设置，文件位置在 sounds 目录下
+keySounds:
+  - inputKeySound: "sounds/input.aiff"
+  - deleteKeySound: "sounds/delete.aiff"
+  - systemKeySound: "sounds/system.aiff"
+  - { action: space, url: "sounds/beezlefm.wav" }
+
+```
