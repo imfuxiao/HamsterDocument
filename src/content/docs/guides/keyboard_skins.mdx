@@ -344,6 +344,7 @@ toolbarHeight: 35
 | textFontWeight | 枚举 | 候选字文字的字重 |
 | commentFontSize | 浮点 | 候选字 comment 字体大小 |
 | commentFontWeight | 枚举 | 候选字 comment 字重 |
+| itemSpacing | 整数 | 可选，水平候选字间隙，系统默认值为 6 pt |
 
 - candidateStateButtonStyle 水平划动展开按键样式，它包含以下属性
 
@@ -1955,6 +1956,10 @@ assetImageName 目前可以引用以下图片：
 
 ### fontFace
 
+:::note[注意]
+此参数在 `config.yaml` 中配置
+:::
+
 字体设置，数组类型，其中数组中的每个元素为一个字体类型。字体按数组顺序设置优先级别。
 
 每个字体包含以下属性：
@@ -2115,6 +2120,10 @@ rimeSchema: "double_pinyin_flypy"
 ```
 
 ### keySounds
+
+:::note[注意]
+此参数在 `config.yaml` 中配置
+:::
 
 可选参数，用于设置按键音效。数组类型，数组中的每个元素为一个音效配置。
 
