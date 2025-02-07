@@ -1,6 +1,29 @@
 ---
 title: 更新日志
 ---
+## 2.11.0（2025-02-07）
+
+- fix: 「键盘皮肤」当开启预测功能并展开候选栏，在上屏 commit 候选字后，键盘显示空白
+- fix: 「键盘皮肤」打开短语/剪贴板页面，浮动键盘不隐藏
+- fix: 「键盘皮肤」下脚本页面输入框高度不能动态变化
+- fix: 「键盘皮肤」下浮动键盘显示异常
+- fix: 「键盘皮肤」长按符号 sf symbol 首选颜色错误
+- fix: 九键拼音预编辑区显示异常
+- fix: 成对符号上屏异常
+- fix: 脚本返回结果存在重复项引发 Crash
+- feat: 「键盘皮肤」水平候选栏添加下划展开手势
+- feat: 「键盘皮肤」支持调整脱字符位置
+- feat: 「键盘皮肤」新增 `runTranslateScript` 命令
+- feat: openURL 添加 #selectText 参数
+- feat: runScript 指令优化，添加当前选择文本做为 $searchText 的值
+- feat: 键盘皮肤原生长按显示优化
+- feat: 键盘皮肤预编辑区添加 rime option 状态显示
+- feat: 新增 `#capsLocked` 指令
+- feat: update librime 1.13.0
+- feat: 键盘皮肤水平候选字间隙调整
+- feat: 键盘皮肤新增 keySounds 配置
+- feat: 键盘皮肤预编辑区 rime 通知字体及字体颜色与 preedit 区域字体及颜色保持一致
+
 ## 2.10.2（2025-01-09）
 
 - fix: `#粘贴`指令无法粘贴URL类型内容
