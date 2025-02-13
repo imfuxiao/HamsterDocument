@@ -69,7 +69,13 @@ export default defineConfig({
               slug: "guides/keyboard_skins",
               badge: { text: "新", variant: "success" },
             },
-            { label: "常见问题", slug: "guides/questions" },
+            {
+              label: "常见问题",
+              items: [
+                { label: "常见问题", slug: "guides/questions" },
+                { label: "按键音量", slug: "guides/keyboard_sounds" },
+              ],
+            },
           ],
         },
         {
