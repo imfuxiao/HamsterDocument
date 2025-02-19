@@ -2182,3 +2182,39 @@ keySounds:
   - { action: space, url: "sounds/beezlefm.wav" }
 
 ```
+
+### text
+
+设置显示文本内容，字符串类型。它有以下几种用法：
+
+1. 固定值，如 `text: "A"`，表示显示文本为 `A`。
+2. 使用 `$inputSchemaID` 或 `$inputSchemaName` 用来显示方案 ID 或者方案名称。如 `text: "$inputSchemaID"` 或 `text: "$inputSchemaName"`。
+   > 注意：键盘界面显示可能会早于「rime」引擎的启动，所以在键盘界面显示时，可能无法获取到方案 ID 或者方案名称，此时显示为空。
+3. 使用 JavaScript 语句，动态生成显示内容。如：
+
+```yaml
+enterButtonBlackForegroundStyle:
+  text: |-
+    // JavaScript
+    function getText() {
+      const type = $getReturnKeyType();
+      switch (type) {
+        case 1:
+          return "前往";
+        case 3:
+          return "加入";
+        case 4:
+          return "前往";
+        case 6:
+          return "搜索"
+        case 7:
+          return "发送"
+        case 9:
+          return "完成";
+        default:
+          return "换行";
+      }
+    }
+```
+
+JavaScript 如何编写，请阅读[脚本](#脚本)部分。
