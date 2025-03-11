@@ -11,6 +11,7 @@ import image1 from './images/skins/image1.png';
 import image10 from './images/skins/image10.png';
 import image11 from './images/skins/image11.png';
 import image12 from './images/skins/image12.png';
+import image13 from './images/skins/image13.png';
 import image2 from './images/skins/image2.png';
 import image3 from './images/skins/image3.png';
 import image4 from './images/skins/image4.png';
@@ -1922,7 +1923,26 @@ assetImageName 目前可以引用以下图片：
 
 ### fontSize
 
-字体大小，浮点类型。
+字体大小。有两种设置方式:
+
+1. 浮点类型，单位：point。表示字体大小的一个精确值。示例：`fontSize: 15`，表示字体大小为 15 个 point。
+2. 相对值，字符串类型，必须以 `em` 结尾。表示字体大小为**标准字体大小**的倍数。示例：`fontSize: 1.5em`，表示字体大小为**标准字体大小**的 1.5 倍。
+
+| 标准字体大小 | 设备 |
+| --- | --- |
+| 14 | iPhone SE, 8, 等小屏设备 |
+| 15 | iPhone X, XS, 11 Pro, 12 mini 等中屏设备 |
+| 16 | iPhone Plus, XS Max, 11, 11 Pro Max 等大屏设备 |
+| 17 | iPad |
+
+
+推荐使用相对值，保证在不同分辨率下字体显示效果。
+
+效果显示：
+
+
+<Image src={image13} alt="" />
+
 
 ### fontWeight
 
