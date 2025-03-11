@@ -253,15 +253,9 @@ preeditForegroundStyle:
 
 ### 高度
 
-工具栏区高度由属性 `toolbarHeight` 控制，单位：point。
+工具栏区高度由属性 `toolbarHeight` 控制。参考 [#toolbarHeight] 参数。
 
-配置示例：
 
-```yaml
-toolbarHeight: 35
-```
-
-上述示例表示工具栏区高度为35个 point。
 
 ### 样式
 
@@ -1701,7 +1695,29 @@ IMG2:
 
 ### preeditHeight
 
-预编辑区高度，浮点类型，单位：point
+预编辑区高度。
+
+值有两种：
+
+1. 数字，单位：point。表示高度的一个精确值。
+
+配置示例：
+
+```yaml
+preeditHeight: 35
+```
+
+上述示例表示工具栏区高度为35个 point。
+
+2. 百分比。必须以 `vh` 字符结束。 表示设置值为当前屏幕高度的百分比。
+
+配置示例：
+
+```yaml
+preeditHeight: 30vh
+```
+
+上述示例表示工具栏区高度为当前屏幕高度的 30%。
 
 :::note[注意]
 当开启「内嵌模式」后，预编辑区会被隐藏。
@@ -1719,7 +1735,11 @@ IMG2:
 
 ### toolbarHeight
 
-工具栏区高度，浮点类型，单位：point
+工具栏区高度。设置方法同 [preeditHeight](#preeditHeight) 参数设置。
+
+### keyboardHeight
+
+键盘区域高度。设置方法同 [preeditHeight](#preeditHeight) 参数设置。
 
 ### toolbar
 
@@ -2219,3 +2239,25 @@ enterButtonBlackForegroundStyle:
 ```
 
 JavaScript 如何编写，请阅读[脚本](#脚本)部分。
+
+### contentMode
+
+:::note[注意]
+此参数仅对 resources 下资源图片有效，系统内置图片，SF Symbol 图片无效。
+:::
+
+可选设置。用于设置图片显示模式。枚举类型，值如下：
+
+| 值 | 说明 |
+| --- | --- |
+| scaleToFill | 图片会被拉伸，填充整个显示区域。注意：可通过「图片描述文件」中的 `insets` 参数排除安全区域，防止拉伸变形，比如图片的圆角区域。 |
+| scaleAspectFit | 图片会按比例缩放，直到宽度或者高度等于显示区域的宽度或者高度。注意此模式可能存在留白区域，留白区域为透明。 |
+| scaleAspectFill | 图片会按比例缩放，直到宽度或者高度等于显示区域的宽度或者高度，然后截取多余部分。注意：此模式下图片可能会显示不全。 |
+| center | 图片不会被拉伸，居中显示 |
+
+默认情况下：
+
+1. 作为「背景样式」中的图片，其显示模式为 `scaleToFill`。
+2. 作为「前景样式」中的图片，其显示模式为 `scaleAspectFit`。
+
+一般情况下无须设置此参数。但是当你想将背景样式的图片设置为前景样式图片时，就需要改变默认的显示模式。此时需要设置此参数。
