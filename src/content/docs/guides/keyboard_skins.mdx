@@ -986,8 +986,9 @@ lockButton:
 | backgroundStyle | 字符串，样式引用 | 长按视图的背景样式 |
 | foregroundStyle | 字符串数组，样式引用 | 长按每个选项的样式。 |
 | actions | 数组 | 长按每个选项的行为。与 foregroundStyle 选项一一对应。  |
-| selectedStyle | 字符串，样式引用 | 选中状态下的样式。 |
-| selectedIndex | 整数 | 初始选中选项。 |
+| selectedStyle | 字符串，样式引用 | 选中状态下的背景样式。 与其他 backgroundStyle 样式参数相同 |
+| selectedIndex | 整数 | 可选参数，初始选中选项，默认为 0。 |
+| symbolWidth | 浮点类型或字符串类型 | 可选参数，用于调整默认选项的宽度，请查阅 [symbolWidth](#symbolwidth) |
 
 :::note[注意]
 对于键盘左右两侧的按键，`selectedIndex` 选项很重要。
@@ -2282,3 +2283,17 @@ JavaScript 如何编写，请阅读[脚本](#脚本)部分。
 2. 作为「前景样式」中的图片，其显示模式为 `scaleAspectFit`。
 
 一般情况下无须设置此参数。但是当你想将背景样式的图片设置为前景样式图片时，就需要改变默认的显示模式。此时需要设置此参数。
+
+### symbolWidth
+
+:::note[注意]
+当 selectedStyle(选中背景样式) 启用「原生样式」时，此参数无效。
+:::
+
+可选参数，用于调整 Cell 的长按符号列表中每个选项的宽度。默认值为当前 cell 的可视区域宽度。
+
+它有以下几种用法：
+
+1. 浮点类型，单位：point。表示一个选项的精确宽度。示例：`symbolWidth: 50`，表示一个当前每个选项的宽度为 50 point。
+  不推荐：因为不同的机型，屏幕宽度是不同的。
+2. 相对值（推荐），字符串类型，必须以 `em` 结尾。表示宽度为**Cell 显示尺寸**的百分比。示例：`symbolWidth: 0.8em`，表示宽度 = **cell 可视区域宽度 * 0.8**。
