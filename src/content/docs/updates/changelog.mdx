@@ -2,6 +2,61 @@
 title: 更新日志
 ---
 
+## 2.16.0(2025-04-18)
+
+- fix: 内置九键点击左侧符号列表显示异常.
+- fix: 皮肤指令不能将指定皮肤参数设置为当前皮肤.
+- fix: 键盘皮肤工具栏闪烁
+- fix: 键盘皮肤在整句连续输入偶发 crash
+- fix: 按键皮肤触控事件取消时，长按符号列表视图仍然显示
+- fix: 自定义键盘功能数组越界引发的 crash
+- fix: 脚本页面中 #selectText 指令无效
+- fix: 键盘皮肤中背景样式不跟随预编辑样式同步变化
+- fix: 键盘皮肤中当预编辑样式为数组类型时，预编辑样式不生效
+- fix: 剪贴板收藏状态显示异常
+- fix: 键盘皮肤展开候选栏后，分类符号页面不隐藏
+- fix: runScript 指令首次打开不运行
+- feat: 新增 #toggleEmbeddedInputMode 指令，用于切换内嵌模式，仅键盘皮肤下有效
+- feat: Wi-Fi 上传方案页面 UI 优化，不在需要点击打开按键
+- feat: 优化键盘皮肤图片显示，提升了图片清晰度
+- feat: 字体路径调整。
+  :::note[注意]
+  将字体路径由 Documents/Rime/Fonts 改为 Documents/Fonts。<br />
+  如果您在使用过程中发现字体显示异常，请重新打开一次「仓」的应用，程序会自动迁移字体到新的位置。
+  :::
+- feat: 新增键盘性能监控。仅在「使用键盘皮肤」且「关闭内嵌模式」时生效。开启方式：键盘设置->启用键盘性能监控
+- feat: 键盘皮肤长按符号新增 symbolWidth 参数，用于调整长按符号列表中每一项的宽度。注意当 selectedStyle 样式为原生样式时，此参数无效。
+- feat: 键盘皮肤 JavaScript 内置函数新增 `$getShiftState`，用于获取 Shift 状态。
+- feat: 内嵌模式优化
+- feat: 键盘皮肤删除 `keyboard` 属性，将它的两个直接的子属性 `style` 与 `subviews` 拆分为 `keyboardStyle` 和 `keyboardLayout` 两个属性。<br/>
+  :::note[注意]
+  目前新版、旧版两种配置都是支持的，且优先按旧的配置进行解析，但不要两种配置混合使用。建议商店版本上线后迁移至新的配置。<br />
+  旧版配置：
+  ```yaml
+  keyboard:
+    style: keyboardStyle # 键盘样式
+    subviews: # 键盘布局
+      - HStack:
+          subviews:
+            - Cell: qButton
+            - Cell: wButton
+  ```
+  新版配置：
+  ```yaml
+  # 键盘样式
+  keyboardStyle:
+    insets: { top: 3, bottom: 3, left: 4, right: 4 }
+    backgroundStyle: keyboardBackgroundStyle
+
+  # 键盘布局
+  keyboardLayout:
+    - HStack:
+        subviews:
+          - Cell: qButton
+  ```
+  :::
+
+
 ## 2.15.0(2025-03-28)
 
 - fix: 打开脚本等带输入框的页面时，偶发键盘crash

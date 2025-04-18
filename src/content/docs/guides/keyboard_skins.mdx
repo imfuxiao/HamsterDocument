@@ -477,47 +477,46 @@ candidateContextMenu:
 在示例1中如先按列（VStack）的分隔，不满足约束1。而先按行（HStack）分隔则满足约束，所以描述如下：
 
 ```yaml
-keyboard:
-  subviews:
-    - HStack:
-        subviews:
-          - Cell: qButton
-          - Cell: wButton
-          - Cell: eButton
-          - Cell: rButton
-          - Cell: tButton
-          - Cell: yButton
-          - Cell: uButton
-          - Cell: iButton
-          - Cell: oButton
-          - Cell: pButton
-    - HStack:
-        subviews:
-          - Cell: aButton
-          - Cell: sButton
-          - Cell: dButton
-          - Cell: fButton
-          - Cell: gButton
-          - Cell: hButton
-          - Cell: jButton
-          - Cell: kButton
-          - Cell: lButton
-    - HStack:
-        subviews:
-          - Cell: shiftButton
-          - Cell: zButton
-          - Cell: xButton
-          - Cell: cButton
-          - Cell: vButton
-          - Cell: bButton
-          - Cell: nButton
-          - Cell: mButton
-          - Cell: backspaceButton
-    - HStack:
-        subviews:
-          - Cell: 123Button
-          - Cell: spaceButton
-          - Cell: enterButton
+keyboardLayout:
+  - HStack:
+      subviews:
+        - Cell: qButton
+        - Cell: wButton
+        - Cell: eButton
+        - Cell: rButton
+        - Cell: tButton
+        - Cell: yButton
+        - Cell: uButton
+        - Cell: iButton
+        - Cell: oButton
+        - Cell: pButton
+  - HStack:
+      subviews:
+        - Cell: aButton
+        - Cell: sButton
+        - Cell: dButton
+        - Cell: fButton
+        - Cell: gButton
+        - Cell: hButton
+        - Cell: jButton
+        - Cell: kButton
+        - Cell: lButton
+  - HStack:
+      subviews:
+        - Cell: shiftButton
+        - Cell: zButton
+        - Cell: xButton
+        - Cell: cButton
+        - Cell: vButton
+        - Cell: bButton
+        - Cell: nButton
+        - Cell: mButton
+        - Cell: backspaceButton
+  - HStack:
+      subviews:
+        - Cell: 123Button
+        - Cell: spaceButton
+        - Cell: enterButton
 ```
 
 <Image src={image3} alt="" />
@@ -529,83 +528,81 @@ keyboard:
 - 先按行分割，可以分为三行，其中第三行的空间还需要继续分割，如下
 
 ```yaml
-keyboard:
-  subviews:
-    - HStack:
-        subviews:
-          - Cell: 123Button
-          - Cell: symbolButton1
-          - Cell: abcButton
-          - Cell: defButton
-          - Cell: backspaceButton
-    - HStack:
-        subviews:
-          - Cell: symbolButton2
-          - Cell: ghiButton
-          - Cell: jklButton
-          - Cell: mnoButton
-          - Cell: symbolButton3
-    - HStack:
-        subviews:
-          - VStack:
-              subviews:
-                - Cell: alphabeticButton
-          - VStack:
-              subviews:
-                - Cell: pqrsButton
-                - Cell: pinyinButton
-          - VStack:
-              subviews:
-                - HStack:
-                    subviews:
-                      - Cell: tuvButton
-                      - Cell: wxyzButton
-                - HStack:
-                    subviews:
-                      - Cell: spaceButton
-          - VStack:
-              subviews:
-                - Cell: enterButton
+keyboardLayout:
+  - HStack:
+      subviews:
+        - Cell: 123Button
+        - Cell: symbolButton1
+        - Cell: abcButton
+        - Cell: defButton
+        - Cell: backspaceButton
+  - HStack:
+      subviews:
+        - Cell: symbolButton2
+        - Cell: ghiButton
+        - Cell: jklButton
+        - Cell: mnoButton
+        - Cell: symbolButton3
+  - HStack:
+      subviews:
+        - VStack:
+            subviews:
+              - Cell: alphabeticButton
+        - VStack:
+            subviews:
+              - Cell: pqrsButton
+              - Cell: pinyinButton
+        - VStack:
+            subviews:
+              - HStack:
+                  subviews:
+                    - Cell: tuvButton
+                    - Cell: wxyzButton
+              - HStack:
+                  subviews:
+                    - Cell: spaceButton
+        - VStack:
+            subviews:
+              - Cell: enterButton
 ```
 
 - 先按列分割，可以分为四列，注意第三列（VStack）还需要继续分隔
 
 ```yaml
-keyboard:
-  subviews:
-    - VStack:
-        subviews:
-          - Cell: 123Button
-          - Cell: symbolButton1
-          - Cell: alphabeticButton
-    - VStack:
-        subviews:
-          - Cell: symbolButton2
-          - Cell: ghlButton
-          - Cell: pqrsButton
-          - Cell: pinyinButton
-    - VStack:
-        subviews:
-          - HStack:
-              subviews:
-                - Cell: abcButton
-                - Cell: defButton
-          - HStack:
-              subviews:
-                - Cell: jklButton
-                - Cell: mnoButton
-          - HStack:
-              subviews:
-                - Cell: tuvButton
-                - Cell: wxyzButton
-          - HStack:
-              subviews:
-                - Cell: spaceButton
-    - VStack:
-        subviews:
-          - Cell: backspaceButton
-          - Cell: symbolButton3
-          - Cell: enterButton
+keyboardLayout:
+  - VStack:
+      subviews:
+        - Cell: 123Button
+        - Cell: symbolButton1
+        - Cell: alphabeticButton
+  - VStack:
+      subviews:
+        - Cell: symbolButton2
+        - Cell: ghlButton
+        - Cell: pqrsButton
+        - Cell: pinyinButton
+  - VStack:
+      subviews:
+        - HStack:
+            subviews:
+              - Cell: abcButton
+              - Cell: defButton
+        - HStack:
+            subviews:
+              - Cell: jklButton
+              - Cell: mnoButton
+        - HStack:
+            subviews:
+              - Cell: tuvButton
+              - Cell: wxyzButton
+        - HStack:
+            subviews:
+              - Cell: spaceButton
+  - VStack:
+      subviews:
+        - Cell: backspaceButton
+        - Cell: symbolButton3
+        - Cell: enterButton
 ```
 
 对比上面两种不同的描述，「先按列」的描述比「先按行」的描述简单。之所以这样，是因为约束3。
@@ -620,54 +617,53 @@ keyboard:
 
 ```yaml
 keyLayout:
-  subviews:
-    - HStack:
-        subviews:
-          - VStack:
-              subviews:
-                - HStack:
-                    subviews:
-                      - Cell: hpButton
-                      - Cell: shButton
-                      - Cell: zhButton
-                - HStack:
-                    subviews:
-                      - Cell: lButton
-                      - Cell: dButton
-                      - Cell: yButton
-                - HStack:
-                    subviews:
-                      - Cell: chButton
-                      - Cell: qButton
-                      - Cell: gButton
-          - VStack:
-              subviews:
-                - Cell: symbolicCollection
-          - VStack:
-              subviews:
-                - HStack:
-                    subviews:
-                      - Cell: bButton
-                      - Cell: xButton
-                      - Cell: msButton
-                - HStack:
-                    subviews:
-                      - Cell: wzButton
-                      - Cell: jkButton
-                      - Cell: rnButton
-                - HStack:
-                    subviews:
-                      - Cell: cfButton
-                      - Cell: tButton
-                      - Cell: backspaceButton
-    - HStack:
-        subviews:
-          - Cell: bottom1Button
-          - Cell: alphabeticButton
-          - Cell: bottom2Button
-          - Cell: spaceButton
-          - Cell: bottom3Button
-          - Cell: enterButton
+  - HStack:
+      subviews:
+        - VStack:
+            subviews:
+              - HStack:
+                  subviews:
+                    - Cell: hpButton
+                    - Cell: shButton
+                    - Cell: zhButton
+              - HStack:
+                  subviews:
+                    - Cell: lButton
+                    - Cell: dButton
+                    - Cell: yButton
+              - HStack:
+                  subviews:
+                    - Cell: chButton
+                    - Cell: qButton
+                    - Cell: gButton
+        - VStack:
+            subviews:
+              - Cell: symbolicCollection
+        - VStack:
+            subviews:
+              - HStack:
+                  subviews:
+                    - Cell: bButton
+                    - Cell: xButton
+                    - Cell: msButton
+              - HStack:
+                  subviews:
+                    - Cell: wzButton
+                    - Cell: jkButton
+                    - Cell: rnButton
+              - HStack:
+                  subviews:
+                    - Cell: cfButton
+                    - Cell: tButton
+                    - Cell: backspaceButton
+  - HStack:
+      subviews:
+        - Cell: bottom1Button
+        - Cell: alphabeticButton
+        - Cell: bottom2Button
+        - Cell: spaceButton
+        - Cell: bottom3Button
+        - Cell: enterButton
 ```
 
 ### VStack 与 HStack 的尺寸
@@ -677,22 +673,20 @@ keyLayout:
 如下，键盘被分为四行，且四行高度相同
 
 ```yaml
-keyboard:
-  subviews:
-    - HStack
-    - HStack
-    - HStack
-    - HStack
+keyboardLayout:
+  - HStack
+  - HStack
+  - HStack
+  - HStack
 ```
 
 如下，键盘分为三列，且三列宽度相同
 
 ```yaml
-keyboard:
-  subviews:
-    - VStack
-    - VStack
-    - VStack
+keyboardLayout:
+  - VStack
+  - VStack
+  - VStack
 ```
 
 当需要为 VStack 或 HStack 指定不同的宽度或高度时，就需要通过参数设置。
@@ -700,16 +694,15 @@ keyboard:
 VStack 与 HStack 通过 `style` 属性指定它的尺寸描述，`style` 的值是一个可以自定义的字符串，如下，`row1Style`，`row2Style` 是 `style` 的自定义的值。
 
 ```yaml
-keyLayout:
-  subviews:
-    - HStack:
-        style: row1Style
-        subviews:
-        ...
-    - HStack:
-        style: row2Style
-        subviews:
-        ...
+keyboardLayout:
+  - HStack:
+      style: row1Style
+      subviews:
+      ...
+  - HStack:
+      style: row2Style
+      subviews:
+      ...
 ...
 
 row1Style:
@@ -2297,3 +2290,59 @@ JavaScript 如何编写，请阅读[脚本](#脚本)部分。
 1. 浮点类型，单位：point。表示一个选项的精确宽度。示例：`symbolWidth: 50`，表示一个当前每个选项的宽度为 50 point。
   不推荐：因为不同的机型，屏幕宽度是不同的。
 2. 相对值（推荐），字符串类型，必须以 `em` 结尾。表示宽度为**Cell 显示尺寸**的百分比。示例：`symbolWidth: 0.8em`，表示宽度 = **cell 可视区域宽度 * 0.8**。
+
+### keyboardStyle
+
+按键区样式设置，目前仅用来设置按键区的背景样式。
+
+配置示例：
+
+```yaml
+keyboardStyle:
+  backgroundStyle: keyboardBackgroundStyle
+```
+
+:::note[注意]
+
+旧版本的按键区样式为：
+
+```yaml
+keyboard:
+  style: keyboardStyle
+```
+旧版本的配置方式目前也支持，但不推荐使用。请迁移至新的配置方式。
+:::
+
+### keyboardLayout
+
+按键布局设置。
+
+配置示例：
+
+```yaml
+# 按键布局
+keyboardLayout:
+  - HStack:
+      subviews:
+        - Cell: qButton
+  - HStack:
+      subviews:
+        - Cell: aButton
+...
+```
+
+:::note[注意]
+旧版本的按键区样式为：
+
+```yaml
+keyboard:
+  style: keyboardStyle
+  subviews:
+    - HStack:
+        subviews:
+          - Cell: qButton
+          - Cell: wButton
+          - Cell: eButton
+```
+旧版本的配置方式目前也支持，但不推荐使用，请迁移至新的配置方式。
+:::
