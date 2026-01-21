@@ -1,0 +1,303 @@
+---
+title: 中文九键
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+<Aside title="注意" type="tip">
+  - 请确保应用更新到商店 2.19.0 及以上版本，或 TF 691 及以上版本；
+  - 中文九键需要对应的九键方案支持，仅使用中文九键布局或皮肤是无法正常输入的。
+</Aside>
+
+## 如何启用『中文九键』
+
+### 前置条件
+
+<Aside title="提示" type="tip">
+- 仓旧版本升级到 2.19.0 及以上的用户，需要按此步骤更新内置雾凇方案；
+- 仓 2.19.0 及以上版本全新安装的用户，可跳过此步骤；
+- 不使用内置雾凇方案的用户，可跳过此步骤，并自行更新输入方案后，请按『RIME 方案如何配置中文九键』调整自己的方案配置；
+</Aside>
+
+- 更新内置输入方案
+
+点击「RIME-RIME 重置」，并选择「确认」，将内置雾凇方案更新到支持中文九键的版本。
+
+### 启用步骤
+
+1. 设置中文九键匹配的方案
+
+    > 注意：如果您使用其他输入方案来配合九键的使用，请参考下面的『RIME 方案如何配置中文九键』修改方案。
+
+    内置的雾凇输入方案中已包含有支持中文九键的方案配置，以下步骤已内置的雾凇方案为例：
+
+    - 点击「输入方案设置」，按住下方输入方案列表中「中文九键」右侧的 ≡ 符号，将其排列到首个位置；
+    - 进入「RIME」页面，点击「重新部署」，并等待部署完成。
+    - 重新进入「输入方案设置」，确保当前下方的输入方案列表中「中文九键」排列在首位。
+    
+    如果方案列表中没有「中文九键」的选项，请将内置雾凇更新到最新的版本。
+
+    <Aside type="tip">
+    - 应用中内置输入方案为[雾凇拼音](https://github.com/iDvel/rime-ice)；
+    - 雾凇拼音提供了很多种输入方案，其中包含了全拼(雾凇拼音)，双拼（自然码双拼，微软双拼等等），中文九键等等；
+    - 雾凇拼音中的不同的输入方案配置不同，从而实现不同的功能，如双拼，中文九键等，但它们使用词库是相同的；
+    - 元书的中文九键功能需要对输入方案做一些特殊配置（具体见下方的「RIME 方案如何配置中文九键」部分），
+        而雾凇拼音中的「中文九键」已经内置的这些配置，所以需要选择雾凇的「中文九键」方案；
+    </Aside>
+
+
+2. 启用中文九键布局
+
+    - 点击进入「键盘布局」，选择「中文 9 键」
+
+## RIME 方案如何配置中文九键
+
+<Aside title="注意" type="tip">
+- 如果您使用的是雾凇输入方案或应用内置方案，无需配置，按上面的「启用步骤」操作即可。
+- 仅支持全拼方案改造，双拼方案不支持
+</Aside>
+
+- 在全拼的方案文件中添加 t9 配置参数
+
+```yaml
+t9:
+  # 是否显示 rime 中原始的预编辑文本，默认为 true
+  # true: 对 preedit 不做处理，显示 rime 返回的原始 preedit 值。
+  #       如果想通过 lua 自己调整 preedit 的显示，可以设置为 true。
+  # false: 根据候选字 comment 显示转换后的 preedit 内容。
+  #        注意：请务必保证候选字 comment 有效且正确，否则可能导致预编辑文本显示异常。
+  isDisplayOriginalPreedit: false
+```
+
+- 在上一步修改的方案文件中的 `processors` 添加 `t9_processor`
+
+> `t9_processor` 会用来处理九键输入的字符，如回车键、删除键等。
+
+```yaml
+engine:
+  processors:
+    - t9_processor
+    #其他 processors
+```
+
+<Aside title="注意" type="tip">
+  - t9_processor 必须添加在首个位置
+</Aside>
+
+- 在上一步修改的方案文件中的 `speller` 添加 `t9` 映射
+
+此步骤将词库中的 ASCII 小写字母派生为数字，如 "abc" 映射为 "2"等，输入数字可模糊匹配词库，输入 ASCII 小写字母可精确匹配词库。
+
+```yaml
+speller:
+  # 注意: 这里添加了数字 0123456789
+  alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA0123456789
+  initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA0123456789
+  algebra:
+    # ### 超级简拼(可选)
+    - abbrev/^([a-z]).+$/$1/ # 超级简拼
+    - abbrev/^([zcs]h).+$/$1/ # 超级简拼中，zh ch sh 视为整体（ch'sh → 城市），而不是像这样分开（c'h's'h → 吃好睡好）。
+    - derive/^([nl])ve$/$1ue/
+    - derive/^([jqxy])u/$1v/
+    - derive/un$/uen/
+    - derive/ui$/uei/
+    - derive/iu$/iou/
+    - derive/([aeiou])ng$/$1gn/
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/
+    - derive/ong$/on/
+    - derive/ao$/oa/
+    - derive/([iu])a(o|ng?)$/a$1$2/
+    # ### 九宫格映射(必须)
+    - derive/[abc]/2/
+    - derive/[def]/3/
+    - derive/[ghi]/4/
+    - derive/[jkl]/5/
+    - derive/[mno]/6/
+    - derive/[pqrs]/7/
+    - derive/[tuv]/8/
+    - derive/[wxyz]/9/
+```
+
+注意：上面的「九宫格映射」部分可以进一步优化为：
+
+```yaml
+- derive/^(.*)$/\U$1/
+- xform/[ABC]/2/
+- xform/[DEF]/3/
+- xform/[GHI]/4/
+- xform/[JKL]/5/
+- xform/[MNO]/6/
+- xform/[PQRS]/7/
+- xform/[TUV]/8/
+- xform/[WXYZ]/9/
+```
+
+这样可以生成更少体积的 prism 文件及更好的性能，但在不同的输入方案下，两种配置生成的效果不太一样。
+
+具体使用那种配置，自己可以都尝试看看效果，哪种效果好用哪个。
+
+- 在上一步修改的方案文件中，屏蔽对候选字 comment 处理的 Lua 脚本
+
+<Aside title="注意" type="tip">
+  - T9 对输入的预编辑字符 preedit 的显示依赖于候选字的 comment 字段，如果有 Lua 脚本屏蔽了 comment 信息，会导致输入的 preedit 中的数字无法显示为具体的拼音。
+    比如输入数字 2，可以匹配到拼音 "a", "b", "c"，如果候选字的 comment 字段被方案处理掉了，预编辑文本就无法正确显示。
+  - 注意：并非所有方案都需要此步骤
+</Aside>
+
+## 常见问题
+
+- 为什么我使用九键后输入的是数字，且没有中文候选字？
+
+    中文九键必须使用九键方案配置，否则会出现输入数字的情况。方案配置请参考『RIME 方案如何配置中文九键』。
+
+- 为什么我输入后，有中文候选字，但不显示拼音，而是显示数字？
+
+    这里存在两种情况：
+    
+    1. 方案中存在 lua 脚本将候选字的 comment 信息屏蔽了，导致预编辑文本无法正确显示。
+    2. 没有为方案添加 `t9/isDisplayOriginalPreedit` 选项或者此选项值不对。
+  
+    无论是哪种情况，都请参考『RIME 方案如何配置中文九键』中的步骤，检查方案的配置。
+
+- 如何屏蔽候选字右侧显示的拼音？
+
+    点击「键盘设置-候选栏设置」，关闭「显示候选 Comment」选项。
+    
+    > 注意：如果此选项是关闭的，可以重新开启在关闭。
+
+- 切换数字键盘后，点击数字按键，上屏的是候选字而非数字？
+
+    两种情况：
+
+    1. 使用的是内置的中文 9 键布局。
+    
+    此情况请检查：「键盘设定」-「数字九宫格」，关闭「数字键由 RIME 处理」选项。
+    
+    2. 使用的是「皮肤」。
+    
+    此情况需要将皮肤中数字键盘中的按键 action，由 `character` 改为 `symbol`。
+
+## 方案配置示例
+
+以下以雾凇方案 `t9.schema.yaml` 为例，展示完整配置：
+
+```yaml
+# Rime schema
+# encoding: utf-8
+
+# 中文九键输入方案配置
+#
+# 可选，支持英文：
+# 1. 解开 `engine/translators` 下的注释
+# 2. 将 `others/Hamster/melt_eng.custom.yaml` 里的文件拷贝至配置目录，该补丁转写了英文的拼写规则到九宫格；
+
+__include: rime_ice.schema.yaml:/
+
+schema:
+  schema_id: t9
+  name: 中文九键
+  version: "3.0.0"
+  author:
+    - Dvel
+    - "[morse.hsiao](https://github.com/imfuxiao)"
+  description: |
+    中文九键·T9
+  dependencies:
+    - melt_eng # 英文输入，作为次翻译器挂载到拼音方案
+
+engine:
+  processors:
+    - t9_processor
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+    - lua_translator@*date_translator # 时间、日期、星期
+    - table_translator@custom_phrase # 自定义短语 custom_phrase_t9.txt
+    # - table_translator@melt_eng     # 英文输入
+    - lua_translator@*calc_translator # 计算器
+  filters:
+    - simplifier@emoji # Emoji
+    - simplifier@traditionalize # 简繁切换
+    - uniquifier # 去重
+
+calculator:
+  prefix: "=" # 计算器前缀
+  show_prefix: true
+
+# 处理符合特定规则的输入码，如网址、反查
+recognizer:
+  import_preset: default # 从 default.yaml 继承通用的
+  patterns: # 再增加方案专有的：
+    calculator: "^=.*$" # 响应 lua_translator@*calc_translator，计算器。前缀设定项 calculator/prefix
+
+translator:
+  prism: t9
+  spelling_hints: 100
+  comment_format: []
+
+# 自定义短语：custom_phrase_t9.txt
+# ⚠️ 编码要用数字
+custom_phrase:
+  dictionary: ""
+  user_dict: custom_phrase_t9
+  db_class: stabledb
+  enable_completion: false
+  enable_sentence: false
+  initial_quality: 99
+
+# 九宫格 1 键上的符号序列
+punctuator:
+  half_shape:
+    "1": [1, "@", ".", "/", ":", "_", "-", "#"]
+    "@": [1, "@", ！, ：, 、, ……, ～]
+    "#": [0, "#", "$", "%", "^", "&", "*", "(", ")"]
+
+t9:
+  isDisplayOriginalPreedit: false
+
+# 输入时按 1 可以分词
+key_binder:
+  bindings:
+    - { when: has_menu, accept: 1, send: apostrophe }
+
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA0123456789
+  initials: zyxwvutsrqponmlkjihgfedcbaZYXWVUTSRQPONMLKJIHGFEDCBA0123456789
+  algebra:
+    # ### 超级简拼
+    - abbrev/^([a-z]).+$/$1/ # 超级简拼
+    - abbrev/^([zcs]h).+$/$1/ # 超级简拼中，zh ch sh 视为整体（ch'sh → 城市），而不是像这样分开（c'h's'h → 吃好睡好）。
+    - derive/^([nl])ve$/$1ue/
+    - derive/^([jqxy])u/$1v/
+    - derive/un$/uen/
+    - derive/ui$/uei/
+    - derive/iu$/iou/
+    - derive/([aeiou])ng$/$1gn/
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/
+    - derive/ong$/on/
+    - derive/ao$/oa/
+    - derive/([iu])a(o|ng?)$/a$1$2/
+    # ### 九宫格映射
+    - derive/[abc]/2/
+    - derive/[def]/3/
+    - derive/[ghi]/4/
+    - derive/[jkl]/5/
+    - derive/[mno]/6/
+    - derive/[pqrs]/7/
+    - derive/[tuv]/8/
+    - derive/[wxyz]/9/
+```

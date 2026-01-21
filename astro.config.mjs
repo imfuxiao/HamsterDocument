@@ -70,6 +70,11 @@ export default defineConfig({
               badge: { text: "新", variant: "success" },
             },
             {
+              label: "中文九键",
+              slug: "guides/chinese-ninekey-configuration",
+              badge: { text: "新", variant: "success" },
+            },
+            {
               label: "常见问题",
               items: [
                 { label: "常见问题", slug: "guides/questions" },
