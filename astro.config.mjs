@@ -49,13 +49,11 @@ export default defineConfig({
             { label: "应用设置", slug: "guides/settings" },
             {
               label: "自定义键盘",
-              slug: "guides/custom_keyboard",
-              badge: { text: "不推荐", variant: "danger" },
+              slug: "guides/custom_keyboard"
             },
             {
               label: "键盘配色",
               slug: "guides/keyboard_color",
-              badge: { text: "不推荐", variant: "danger" },
             },
             { label: "词库同步", slug: "guides/sync" },
             { label: "RIME 相关", slug: "guides/rime" },
