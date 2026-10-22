@@ -58,19 +58,19 @@ export default defineConfig({
             { label: "词库同步", slug: "guides/sync" },
             { label: "RIME 相关", slug: "guides/rime" },
             {
-              label: "剪贴板",
-              slug: "guides/pasteboard",
-              badge: { text: "新", variant: "success" },
+              label: "脚本",
+              slug: "guides/script",
+              // badge: { text: "新", variant: "success" },
             },
             {
               label: "键盘皮肤",
               slug: "guides/keyboard_skins",
-              badge: { text: "新", variant: "success" },
+              // badge: { text: "新", variant: "success" },
             },
             {
               label: "中文九键",
               slug: "guides/chinese-ninekey-configuration",
-              badge: { text: "新", variant: "success" },
+              // badge: { text: "新", variant: "success" },
             },
             {
               label: "常见问题",
